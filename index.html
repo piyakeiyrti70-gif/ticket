@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <title>ระบบจองตั๋วคอนเสิร์ต</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #e9ecef; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); width: 300px; text-align: center; }
-        input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #e9ecef; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); width: 320px; text-align: center; }
+        input { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
         button { width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; margin-top: 10px; }
         button:hover { background-color: #0056b3; }
         .hidden { display: none; }
-        .ticket-card { border: 2px dashed #007bff; padding: 20px; border-radius: 8px; margin-top: 20px; }
+        .ticket-card { border: 2px dashed #007bff; padding: 20px; border-radius: 8px; margin-top: 20px; text-align: left; }
+        .user-info { margin-bottom: 15px; font-size: 14px; text-align: left; background: #f8f9fa; padding: 10px; border-radius: 6px; }
     </style>
 </head>
 <body>
@@ -19,25 +20,36 @@
     <h2 id="auth-title">เข้าสู่ระบบ</h2>
     <input type="text" id="username" placeholder="ชื่อผู้ใช้งาน">
     <input type="password" id="password" placeholder="รหัสผ่าน">
+    
+    <div id="register-fields" class="hidden">
+        <input type="tel" id="phone" placeholder="เบอร์โทรศัพท์">
+        <input type="email" id="email" placeholder="อีเมล">
+    </div>
+
     <button id="auth-btn" onclick="handleAuth()">เข้าสู่ระบบ</button>
     <p id="toggle-text">ยังไม่มีบัญชี? <a href="#" onclick="toggleMode(event)">สมัครสมาชิก</a></p>
 </div>
 
 <div class="container hidden" id="booking-panel">
-    <h2>ยินดีต้อนรับ, <span id="user-display"></span></h2>
+    <h2>ยินดีต้อนรับ</h2>
+    <div class="user-info">
+        <b>ชื่อผู้ใช้:</b> <span id="disp-user"></span><br>
+        <b>เบอร์โทร:</b> <span id="disp-phone"></span><br>
+        <b>อีเมล:</b> <span id="disp-email"></span>
+    </div>
+    
     <div class="ticket-card">
         <h3>คอนเสิร์ตฮิตติดกระแส</h3>
         <p>ราคา: 1,500 บาท</p>
         <button id="book-btn" onclick="bookTicket()">กดจองบัตร</button>
     </div>
     <p id="booking-status" style="margin-top: 15px; font-weight: bold;"></p>
-    <button onclick="logout()" style="background-color: #dc3545; margin-top: 20px;">ออกจากระบบ</button>
+    <button onclick="logout()" style="background-color: #dc3545; margin-top: 15px;">ออกจากระบบ</button>
 </div>
 
 <script>
     let isLoginMode = true;
     let registeredUsers = {};
-    let currentUser = "";
 
     function toggleMode(event) {
         event.preventDefault();
@@ -45,31 +57,35 @@
         const title = document.getElementById('auth-title');
         const btn = document.getElementById('auth-btn');
         const toggleText = document.getElementById('toggle-text');
+        const regFields = document.getElementById('register-fields');
 
         if (isLoginMode) {
             title.innerText = "เข้าสู่ระบบ";
             btn.innerText = "เข้าสู่ระบบ";
             toggleText.innerHTML = 'ยังไม่มีบัญชี? <a href="#" onclick="toggleMode(event)">สมัครสมาชิก</a>';
+            regFields.classList.add('hidden');
         } else {
             title.innerText = "สมัครสมาชิก";
             btn.innerText = "ลงทะเบียน";
             toggleText.innerHTML = 'มีบัญชีอยู่แล้ว? <a href="#" onclick="toggleMode(event)">เข้าสู่ระบบ</a>';
+            regFields.classList.remove('hidden');
         }
     }
 
     function handleAuth() {
         const user = document.getElementById('username').value;
         const pass = document.getElementById('password').value;
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
 
-        if (!user || !pass) {
+        if (!user || !pass || (!isLoginMode && (!phone || !email))) {
             alert("กรุณากรอกข้อมูลให้ครบถ้วน");
             return;
         }
 
         if (isLoginMode) {
-            if (registeredUsers[user] && registeredUsers[user] === pass) {
-                currentUser = user;
-                showBookingPanel();
+            if (registeredUsers[user] && registeredUsers[user].password === pass) {
+                showBookingPanel(registeredUsers[user]);
             } else {
                 alert("ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง");
             }
@@ -77,16 +93,18 @@
             if (registeredUsers[user]) {
                 alert("ชื่อผู้ใช้งานนี้มีผู้ใช้แล้ว");
             } else {
-                registeredUsers[user] = pass;
+                registeredUsers[user] = { password: pass, phone: phone, email: email };
                 alert("สมัครสมาชิกสำเร็จ! กรุณาเข้าสู่ระบบ");
                 toggleMode(new Event('click'));
             }
         }
     }
 
-    function showBookingPanel() {
+    function showBookingPanel(userData) {
         document.getElementById('auth-panel').classList.add('hidden');
-        document.getElementById('user-display').innerText = currentUser;
+        document.getElementById('disp-user').innerText = document.getElementById('username').value;
+        document.getElementById('disp-phone').innerText = userData.phone;
+        document.getElementById('disp-email').innerText = userData.email;
         document.getElementById('booking-panel').classList.remove('hidden');
     }
 
@@ -104,10 +122,11 @@
         document.getElementById('auth-panel').classList.remove('hidden');
         document.getElementById('username').value = '';
         document.getElementById('password').value = '';
+        document.getElementById('phone').value = '';
+        document.getElementById('email').value = '';
         document.getElementById('book-btn').disabled = false;
         document.getElementById('book-btn').style.backgroundColor = "#007bff";
         document.getElementById('booking-status').innerText = '';
-        currentUser = "";
     }
 </script>
 
