@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>ระบบจองตั๋วคอนเสิร์ต</title>
+<style>
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #e9ecef; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+.container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); width: 300px; text-align: center; }
+input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+button { width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; margin-top: 10px; }
+button:hover { background-color: #0056b3; }
+.hidden { display: none; }
+.ticket-card { border: 2px dashed #007bff; padding: 20px; border-radius: 8px; margin-top: 20px; }
+</style>
+</head>
+<body>
+<div class="container" id="auth-panel">
+<h2 id="auth-title">เข้าสู่ระบบ</h2>
+<input type="text" id="username" placeholder="ชื่อผู้ใช้งาน">
+<input type="password" id="password" placeholder="รหัสผ่าน">
+<button id="auth-btn" onclick="handleAuth()">เข้าสู่ระบบ</button>
+<p id="toggle-text">ยังไม่มีบัญชี? <a href="#" onclick="toggleMode(event)">สมัครสมาชิก</a></p>
+</div>
+<div class="container hidden" id="booking-panel">
+<h2>ยินดีต้อนรับ, <span id="user-display"></span></h2>
+<div class="ticket-card">
+<h3>คอนเสิร์ตฮิตติดกระแส</h3>
+<p>ราคา: 1,500 บาท</p>
+<button id="book-btn" onclick="bookTicket()">กดจองบัตร</button>
+</div>
+<p id="booking-status" style="margin-top: 15px; font-weight: bold;"></p>
+<button onclick="logout()" style="background-color: #dc3545; margin-top: 20px;">ออกจากระบบ</button>
+</div>
+<script>
+let isLoginMode = true;
+let registeredUsers = {};
+let currentUser = "";
+function toggleMode(event) {
+event.preventDefault();
+isLoginMode = !isLoginMode;
+const title = document.getElementById('auth-title');
+const btn = document.getElementById('auth-btn');
+const toggleText = document.getElementById('toggle-text');
+if (isLoginMode) {
+title.innerText = "เข้าสู่ระบบ";
+btn.innerText = "เข้าสู่ระบบ";
+toggleText.innerHTML = 'ยังไม่มีบัญชี? <a href="#" onclick="toggleMode(event)">สมัครสมาชิก</a>';
+} else {
+title.innerText = "สมัครสมาชิก";
+btn.innerText = "ลงทะเบียน";
+toggleText.innerHTML = 'มีบัญชีอยู่แล้ว? <a href="#" onclick="toggleMode(event)">เข้าสู่ระบบ</a>';
+}
+}
+function handleAuth() {
+const user = document.getElementById('username').value;
+const pass = document.getElementById('password').value;
+if (!user || !pass) {
+alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+return;
+}
+if (isLoginMode) {
+if (registeredUsers[user] && registeredUsers[user] === pass) {
+currentUser = user;
+showBookingPanel();
+} else {
+alert("ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง");
+}
+} else {
+if (registeredUsers[user]) {
+alert("ชื่อผู้ใช้งานนี้มีผู้ใช้แล้ว");
+} else {
+registeredUsers[user] = pass;
+alert("สมัครสมาชิกสำเร็จ! กรุณาเข้าสู่ระบบ");
+toggleMode(new Event('click'));
+}
+}
+}
+function showBookingPanel() {
+document.getElementById('auth-panel').classList.add('hidden');
+document.getElementById('user-display').innerText = currentUser;
+document.getElementById('booking-panel').classList.remove('hidden');
+}
+function bookTicket() {
+const btn = document.getElementById('book-btn');
+const status = document.getElementById('booking-status');
+btn.disabled = true;
+btn.style.backgroundColor = "#ccc";
+status.style.color = "green";
+status.innerText = "จองสำเร็จแล้ว!";
+}
+function logout() {
+document.getElementById('booking-panel').classList.add('hidden');
+document.getElementById('auth-panel').classList.remove('hidden');
+document.getElementById('username').value = '';
+document.getElementById('password').value = '';
+document.getElementById('book-btn').disabled = false;
+document.getElementById('book-btn').style.backgroundColor = "#007bff";
+document.getElementById('booking-status').innerText = '';
+currentUser = "";
+}
+</script>
+</body>
+</html>
