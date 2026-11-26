@@ -27,7 +27,7 @@
 
         .container {
             background: var(--card-bg);
-            padding: 2rem;
+            padding: 2.5rem;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             width: 100%;
@@ -42,23 +42,23 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 0.5rem;
-            font-size: 1.8rem;
+            font-size: 2rem;
         }
 
-        .subtitle { color: #a5a5c7; margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .subtitle { color: #a5a5c7; margin-bottom: 2rem; font-size: 1rem; }
 
-        .form-group { text-align: left; margin-bottom: 1rem; }
+        .form-group { text-align: left; margin-bottom: 1.5rem; }
 
-        label { display: block; margin-bottom: 0.5rem; color: #e2e2e2; }
+        label { display: block; margin-bottom: 0.5rem; color: #e2e2e2; font-size: 1.1rem; }
 
         input, select {
             width: 100%;
-            padding: 12px;
-            border-radius: 10px;
+            padding: 16px;
+            border-radius: 12px;
             border: none;
             background: #0f3460;
             color: white;
-            font-size: 1rem;
+            font-size: 1.1rem;
             box-sizing: border-box;
         }
 
@@ -66,22 +66,43 @@
 
         button.main-btn {
             width: 100%;
-            padding: 12px;
+            padding: 18px;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             background: var(--primary-gradient);
             color: white;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: bold;
             cursor: pointer;
-            transition: transform 0.2s;
-            margin-top: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 15px;
         }
 
-        button.main-btn:hover { transform: translateY(-3px); }
+        button.main-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(255,8,68,0.4); }
 
-        .toggle-link { margin-top: 1.5rem; font-size: 0.9rem; color: #a5a5c7; }
-        .toggle-link a { color: var(--accent-color); text-decoration: none; font-weight: bold; }
+        /* ปรับปรุงปุ่มสลับโหมดให้กดง่าย เป็นกล่องขนาดใหญ่ */
+        .mode-toggle-area {
+            margin-top: 2.5rem;
+            padding: 15px;
+            background: #0f3460;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .toggle-text { font-size: 1.1rem; color: #a5a5c7; margin-bottom: 10px; }
+
+        .toggle-btn {
+            display: inline-block;
+            width: 100%;
+            padding: 14px;
+            background: #e94560;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
 
         .hidden { display: none; }
 
@@ -90,65 +111,66 @@
             display: flex;
             align-items: center;
             background: #0f3460;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
             text-align: left;
         }
 
         .avatar {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             background: var(--primary-gradient);
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: bold;
-            margin-right: 15px;
+            margin-right: 20px;
             flex-shrink: 0;
         }
 
         .wallet-card {
             background: linear-gradient(135deg, #1f4068 0%, #162447 100%);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
             border: 1px solid var(--accent-color);
         }
 
         .balance-amount {
-            font-size: 1.8rem;
+            font-size: 2.2rem;
             font-weight: bold;
             color: var(--accent-color);
+            margin: 10px 0;
         }
 
         .history-section {
             text-align: left;
             background: #0f3460;
             padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            max-height: 150px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            max-height: 180px;
             overflow-y: auto;
         }
 
         .history-item {
-            font-size: 0.9rem;
-            padding: 8px 0;
+            font-size: 1rem;
+            padding: 10px 0;
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         .ticket-box {
             border: 2px dashed var(--accent-color);
-            padding: 15px;
-            border-radius: 10px;
+            padding: 20px;
+            border-radius: 15px;
             background: #16213e;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
-        .logout-btn { background: #e94560 !important; margin-top: 10px; }
+        .logout-btn { background: #333 !important; margin-top: 15px; }
     </style>
 </head>
 <body>
@@ -181,7 +203,11 @@
 
     <button class="main-btn" id="auth-btn" onclick="handleAuth()">เข้าสู่ระบบ</button>
 
-    <p class="toggle-link" id="toggle-text">ยังไม่มีบัญชี? <a href="#" onclick="toggleMode(event)">สมัครสมาชิก</a></p>
+    <!-- พื้นที่กดสลับโหมดแบบใหม่ ขนาดใหญ่ ชัดเจน -->
+    <div class="mode-toggle-area">
+        <div class="toggle-text" id="toggle-text">ยังไม่มีบัญชีใช่ไหม?</div>
+        <a href="#" class="toggle-btn" id="toggle-link-btn" onclick="toggleMode(event)">ไปหน้าสมัครสมาชิก</a>
+    </div>
 </div>
 
 <!-- Booking & Profile Panel -->
@@ -189,24 +215,24 @@
     <div class="profile-header">
         <div class="avatar" id="user-avatar">U</div>
         <div>
-            <h3 style="margin:0;" id="disp-user">Username</h3>
-            <span style="font-size: 0.85rem; color: #a5a5c7;" id="disp-email">email@example.com</span>
+            <h3 style="margin:0; font-size: 1.4rem;" id="disp-user">Username</h3>
+            <span style="font-size: 1rem; color: #a5a5c7;" id="disp-email">email@example.com</span>
         </div>
     </div>
 
     <div class="wallet-card">
-        <div>ยอดเงินคงเหลือของคุณ</div>
+        <div style="font-size: 1.1rem;">ยอดเงินคงเหลือของคุณ</div>
         <div class="balance-amount"><span id="wallet-balance">500</span> บาท</div>
-        <div style="margin-top: 10px;">
-            <input type="number" id="topup-amount" placeholder="ระบุจำนวนเงิน" style="width: 120px; padding: 5px; font-size: 0.9rem;">
-            <button onclick="topupMoney()" style="padding: 6px 15px; border-radius: 5px; border: none; background: #28a745; color: white; cursor: pointer; font-weight: bold;">เติมเงิน</button>
+        <div style="display: flex; gap: 10px; margin-top: 15px;">
+            <input type="number" id="topup-amount" placeholder="ระบุจำนวนเงิน" style="flex-grow: 1;">
+            <button onclick="topupMoney()" style="padding: 12px 20px; border-radius: 10px; border: none; background: #28a745; color: white; cursor: pointer; font-weight: bold; font-size: 1rem;">เติมเงิน</button>
         </div>
     </div>
 
     <div class="ticket-box">
-        <h3>จองบัตรคอนเสิร์ตฮิต</h3>
-        <div class="form-group" style="margin-bottom: 10px;">
-            <label style="font-size: 0.9rem;">เลือกโซน</label>
+        <h3 style="margin-top: 0;">จองบัตรคอนเสิร์ตฮิต</h3>
+        <div class="form-group">
+            <label>เลือกโซนที่นั่ง</label>
             <select id="ticket-type" onchange="updatePrice()">
                 <option value="500">โซน Regular - 500 บาท</option>
                 <option value="1500">โซน A - 1,500 บาท</option>
@@ -214,14 +240,14 @@
             </select>
         </div>
         <div class="form-group">
-            <label style="font-size: 0.9rem;">จำนวนใบ</label>
+            <label>จำนวนใบ</label>
             <input type="number" id="ticket-amount" min="1" max="5" value="1" onchange="updatePrice()">
         </div>
-        <div style="font-size: 1.1rem; font-weight: bold; margin: 10px 0;">รวมเป็นเงิน: <span id="total-price">500</span> บาท</div>
+        <div style="font-size: 1.3rem; font-weight: bold; margin: 15px 0; color: var(--accent-color);">รวมเป็นเงิน: <span id="total-price">500</span> บาท</div>
         <button class="main-btn" onclick="bookTicket()">ยืนยันการจอง</button>
     </div>
 
-    <h4>ประวัติการจองตั๋ว</h4>
+    <h4 style="text-align: left; margin-bottom: 10px; font-size: 1.2rem;">ประวัติการจองตั๋ว</h4>
     <div class="history-section" id="booking-history">
         <div class="history-item" style="color: #6c757d;">ยังไม่มีประวัติการจอง</div>
     </div>
@@ -242,17 +268,20 @@
         const title = document.getElementById('auth-title');
         const btn = document.getElementById('auth-btn');
         const toggleText = document.getElementById('toggle-text');
+        const toggleBtn = document.getElementById('toggle-link-btn');
         const regFields = document.getElementById('register-fields');
 
         if (isLoginMode) {
             title.innerText = "เข้าสู่ระบบ";
             btn.innerText = "เข้าสู่ระบบ";
-            toggleText.innerHTML = 'ยังไม่มีบัญชี? <a href="#" onclick="toggleMode(event)">สมัครสมาชิก</a>';
+            toggleText.innerText = "ยังไม่มีบัญชีใช่ไหม?";
+            toggleBtn.innerText = "ไปหน้าสมัครสมาชิก";
             regFields.classList.add('hidden');
         } else {
             title.innerText = "สมัครสมาชิก";
             btn.innerText = "ลงทะเบียน";
-            toggleText.innerHTML = 'มีบัญชีอยู่แล้ว? <a href="#" onclick="toggleMode(event)">เข้าสู่ระบบ</a>';
+            toggleText.innerText = "มีบัญชีอยู่แล้วใช่ไหม?";
+            toggleBtn.innerText = "ไปหน้าเข้าสู่ระบบ";
             regFields.classList.remove('hidden');
         }
     }
@@ -263,29 +292,4 @@
         const phone = document.getElementById('phone').value.trim();
         const email = document.getElementById('email').value.trim();
 
-        if (!user || !pass || (!isLoginMode && (!phone || !email))) {
-            alert("กรุณากรอกข้อมูลให้ครบถ้วนครับ");
-            return;
-        }
-
-        if (isLoginMode) {
-            if (registeredUsers[user] && registeredUsers[user].password === pass) {
-                currentUser = user;
-                userWallet = registeredUsers[user].wallet;
-                bookingHistory = registeredUsers[user].history;
-                showMainPanel(registeredUsers[user]);
-            } else {
-                alert("ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง");
-            }
-        } else {
-            if (registeredUsers[user]) {
-                alert("ชื่อผู้ใช้นี้มีผู้ใช้งานแล้ว");
-            } else {
-                registeredUsers[user] = { 
-                    password: pass, 
-                    phone: phone, 
-                    email: email,
-                    wallet: 500,
-                    history: []
-                };
-                alert("สมัครสมาชิกสำเร็จ! (แถมฟรีเค
+        if (!user ||
