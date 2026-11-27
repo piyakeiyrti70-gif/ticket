@@ -80,8 +80,7 @@
 
         button.main-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(255,8,68,0.4); }
 
-        /* ปรับปรุงปุ่มสลับโหมดให้กดง่าย เป็นกล่องขนาดใหญ่ */
-        .mode-toggle-area {
+        .toggle-section {
             margin-top: 2.5rem;
             padding: 15px;
             background: #0f3460;
@@ -91,17 +90,16 @@
 
         .toggle-text { font-size: 1.1rem; color: #a5a5c7; margin-bottom: 10px; }
 
-        .toggle-btn {
-            display: inline-block;
+        .action-toggle-btn {
             width: 100%;
-            padding: 14px;
+            padding: 15px;
             background: #e94560;
             color: white;
-            text-decoration: none;
+            border: none;
+            border-radius: 8px;
             font-weight: bold;
             font-size: 1.2rem;
-            border-radius: 8px;
-            box-sizing: border-box;
+            cursor: pointer;
         }
 
         .hidden { display: none; }
@@ -175,38 +173,39 @@
 </head>
 <body>
 
-<!-- Login / Register Panel -->
-<div class="container" id="auth-panel">
-    <h1 id="auth-title">เข้าสู่ระบบ</h1>
-    <p class="subtitle">ยินดีต้อนรับสู่ระบบจองบัตรคอนเสิร์ต</p>
+<!-- Login Panel -->
+<div class="container" id="login-panel">
+    <h1 id="panel-title">เข้าสู่ระบบ</h1>
+    <p class="subtitle" id="panel-subtitle">ยินดีต้อนรับสู่ระบบจองบัตรคอนเสิร์ต</p>
     
-    <div class="form-group">
-        <label>ชื่อผู้ใช้งาน</label>
-        <input type="text" id="username" placeholder="กรอกชื่อผู้ใช้">
-    </div>
-
-    <div class="form-group">
-        <label>รหัสผ่าน</label>
-        <input type="password" id="password" placeholder="กรอกรหัสผ่าน">
-    </div>
-
-    <div id="register-fields" class="hidden">
+    <form id="auth-form" onsubmit="event.preventDefault(); handleAuth();">
         <div class="form-group">
-            <label>เบอร์โทรศัพท์</label>
-            <input type="tel" id="phone" placeholder="0812345678">
+            <label>ชื่อผู้ใช้งาน</label>
+            <input type="text" id="username" required placeholder="กรอกชื่อผู้ใช้">
         </div>
+
         <div class="form-group">
-            <label>อีเมล</label>
-            <input type="email" id="email" placeholder="example@email.com">
+            <label>รหัสผ่าน</label>
+            <input type="password" id="password" required placeholder="กรอกรหัสผ่าน">
         </div>
-    </div>
 
-    <button class="main-btn" id="auth-btn" onclick="handleAuth()">เข้าสู่ระบบ</button>
+        <div id="register-fields" class="hidden">
+            <div class="form-group">
+                <label>เบอร์โทรศัพท์</label>
+                <input type="tel" id="phone" placeholder="0812345678">
+            </div>
+            <div class="form-group">
+                <label>อีเมล</label>
+                <input type="email" id="email" placeholder="example@email.com">
+            </div>
+        </div>
 
-    <!-- พื้นที่กดสลับโหมดแบบใหม่ ขนาดใหญ่ ชัดเจน -->
-    <div class="mode-toggle-area">
+        <button type="submit" class="main-btn" id="submit-btn">เข้าสู่ระบบ</button>
+    </form>
+
+    <div class="toggle-section">
         <div class="toggle-text" id="toggle-text">ยังไม่มีบัญชีใช่ไหม?</div>
-        <a href="#" class="toggle-btn" id="toggle-link-btn" onclick="toggleMode(event)">ไปหน้าสมัครสมาชิก</a>
+        <button class="action-toggle-btn" id="toggle-action-btn" onclick="switchMode()">ไปหน้าสมัครสมาชิก</button>
     </div>
 </div>
 
@@ -262,34 +261,27 @@
     let userWallet = 0;
     let bookingHistory = [];
 
-    function toggleMode(event) {
-        event.preventDefault();
+    function switchMode() {
         isLoginMode = !isLoginMode;
-        const title = document.getElementById('auth-title');
-        const btn = document.getElementById('auth-btn');
+        const panelTitle = document.getElementById('panel-title');
+        const panelSubtitle = document.getElementById('panel-subtitle');
+        const submitBtn = document.getElementById('submit-btn');
         const toggleText = document.getElementById('toggle-text');
-        const toggleBtn = document.getElementById('toggle-link-btn');
-        const regFields = document.getElementById('register-fields');
+        const toggleActionBtn = document.getElementById('toggle-action-btn');
+        const registerFields = document.getElementById('register-fields');
 
         if (isLoginMode) {
-            title.innerText = "เข้าสู่ระบบ";
-            btn.innerText = "เข้าสู่ระบบ";
+            panelTitle.innerText = "เข้าสู่ระบบ";
+            panelSubtitle.innerText = "ยินดีต้อนรับสู่ระบบจองบัตรคอนเสิร์ต";
+            submitBtn.innerText = "เข้าสู่ระบบ";
             toggleText.innerText = "ยังไม่มีบัญชีใช่ไหม?";
-            toggleBtn.innerText = "ไปหน้าสมัครสมาชิก";
-            regFields.classList.add('hidden');
+            toggleActionBtn.innerText = "ไปหน้าสมัครสมาชิก";
+            registerFields.classList.add('hidden');
+            document.getElementById('phone').required = false;
+            document.getElementById('email').required = false;
         } else {
-            title.innerText = "สมัครสมาชิก";
-            btn.innerText = "ลงทะเบียน";
+            panelTitle.innerText = "สมัครสมาชิก";
+            panelSubtitle.innerText = "กรุณากรอกข้อมูลเพื่อเริ่มต้นใช้งาน";
+            submitBtn.innerText = "ลงทะเบียน";
             toggleText.innerText = "มีบัญชีอยู่แล้วใช่ไหม?";
-            toggleBtn.innerText = "ไปหน้าเข้าสู่ระบบ";
-            regFields.classList.remove('hidden');
-        }
-    }
-
-    function handleAuth() {
-        const user = document.getElementById('username').value.trim();
-        const pass = document.getElementById('password').value.trim();
-        const phone = document.getElementById('phone').value.trim();
-        const email = document.getElementById('email').value.trim();
-
-        if (!user ||
+            toggleActionBtn.innerText = "ไปหน้าเข้า
