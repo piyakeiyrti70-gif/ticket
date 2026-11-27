@@ -181,6 +181,93 @@
         .btn-logout:hover {
             filter: brightness(1.2);
         }
+
+        /* --- สไตล์สำหรับ Popup QR Code --- */
+        .qr-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .qr-modal-overlay.active {
+            display: flex;
+        }
+
+        .qr-modal-box {
+            background: #1a1638;
+            border: 1px solid var(--accent);
+            border-radius: 20px;
+            padding: 25px;
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 210, 255, 0.3);
+        }
+
+        .qr-image-wrapper {
+            background: white;
+            padding: 10px;
+            border-radius: 15px;
+            margin: 15px auto;
+            max-width: 260px;
+        }
+
+        .qr-image-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+        }
+
+        .qr-amount-badge {
+            background: rgba(0, 210, 255, 0.15);
+            color: var(--accent);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-confirm-pay {
+            flex: 2;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: #2ed573;
+            color: #000;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-confirm-pay:hover {
+            filter: brightness(1.1);
+        }
+
+        .btn-cancel-pay {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -208,91 +295,43 @@
         </div>
 
         <div>
-            <h3 class="section-title">💳 ระบบเติมเงิน</h3>
+            <h3 class="section-title">💳 ระบบเติมเงิน (สแกน QR Code)</h3>
             <div class="topup-grid">
-                <button class="topup-preset" onclick="topUp(1000)">+1,000</button>
-                <button class="topup-preset" onclick="topUp(3000)">+3,000</button>
-                <button class="topup-preset" onclick="topUp(5000)">+5,000</button>
+                <button class="topup-preset" onclick="openQRModal(1000)">+1,000</button>
+                <button class="topup-preset" onclick="openQRModal(3000)">+3,000</button>
+                <button class="topup-preset" onclick="openQRModal(5000)">+5,000</button>
             </div>
             <div class="custom-topup">
                 <input type="number" id="customTopup" placeholder="ระบุจำนวนเงินที่ต้องการเติม">
-                <button class="btn-topup" onclick="topUpCustom()">เติมเงิน</button>
+                <button class="btn-topup" onclick="openCustomQRModal()">เติมเงิน</button>
             </div>
         </div>
 
         <button class="btn-logout" onclick="logout()">ออกจากระบบ</button>
     </div>
 
-    <script>
-        function loadProfileData() {
-            const currentUser = localStorage.getItem('current_user');
-            if (!currentUser) {
-                window.location.href = 'index.html';
-                return;
-            }
-            const users = JSON.parse(localStorage.getItem('concert_users'));
-            if (!users || !users[currentUser]) {
-                window.location.href = 'index.html';
-                return;
-            }
-            const userData = users[currentUser];
-
-            const firstLetter = currentUser.charAt(0).toUpperCase();
-            document.getElementById('profileAvatar').innerText = firstLetter;
-            document.getElementById('profileUsername').innerText = currentUser;
-            document.getElementById('profileDetails').innerText = `อีเมล: ${userData.email} | เบอร์โทร: ${userData.phone}`;
+    <!-- หน้าต่าง Popup แสดง QR Code -->
+    <div id="qrModal" class="qr-modal-overlay">
+        <div class="qr-modal-box">
+            <h3 style="margin-bottom: 10px; color: white;">สแกน QR Code เพื่อเติมเงิน</h3>
+            <div class="qr-amount-badge">ยอดชำระ: <span id="modalTopupAmount">0</span> ฿</div>
             
-            updateBalanceAndHistory();
-        }
+            <div class="qr-image-wrapper">
+                <!-- เรียกใช้ไฟล์รูปภาพ qr.jpg -->
+                <img src="qr.jpg" alt="Thai QR Payment PromptPay" onerror="this.src='https://via.placeholder.com/250x300?text=ไม่พบไฟล์+qr.jpg'">
+            </div>
+            
+            <p style="font-size: 0.85rem; color: #ccc;">ชื่อบัญชี: นาย ปิยะเกียรติ เกตุไชโย<br>เมื่อโอนเงินเสร็จสิ้น กรุณากดปุ่มยืนยันด้านล่าง</p>
+            
+            <div class="modal-actions">
+                <button class="btn-cancel-pay" onclick="closeQRModal()">ยกเลิก</button>
+                <button class="btn-confirm-pay" onclick="confirmPayment()">✅ ยืนยันการชำระเงิน</button>
+            </div>
+        </div>
+    </div>
 
-        function updateBalanceAndHistory() {
-            const currentUser = localStorage.getItem('current_user');
-            const users = JSON.parse(localStorage.getItem('concert_users'));
-            if (!users || !users[currentUser]) return;
-            const userData = users[currentUser];
+    <script>
+        let pendingTopupAmount = 0; // เก็บยอดเงินที่รอการยืนยัน
 
-            document.getElementById('userBalance').innerText = userData.balance.toLocaleString();
-
-            const historyList = document.getElementById('historyList');
-            if (!userData.history || userData.history.length === 0) {
-                historyList.innerHTML = '<p style="color: #888; font-size: 0.9rem; text-align: center; padding: 20px;">ยังไม่มีประวัติการจอง</p>';
-            } else {
-                historyList.innerHTML = userData.history.map(item => `
-                    <div class="history-item">
-                        <strong>คอนเสิร์ต: ${item.concert}</strong><br>
-                        <span>โซน: ${item.zone}</span><br>
-                        <small style="color: #aaa;">วันที่จอง: ${item.date}</small>
-                    </div>
-                `).join('');
-            }
-        }
-
-        function topUp(amount) {
-            const currentUser = localStorage.getItem('current_user');
-            let users = JSON.parse(localStorage.getItem('concert_users'));
-            users[currentUser].balance += amount;
-            localStorage.setItem('concert_users', JSON.stringify(users));
-            updateBalanceAndHistory();
-            alert(`เติมเงินสำเร็จ +${amount.toLocaleString()} บาท`);
-        }
-
-        function topUpCustom() {
-            const input = document.getElementById('customTopup');
-            const amount = parseInt(input.value);
-            if (!amount || amount <= 0) {
-                alert('กรุณาระบุจำนวนเงินที่ถูกต้อง');
-                return;
-            }
-            topUp(amount);
-            input.value = '';
-        }
-
-        function logout() {
-            localStorage.removeItem('current_user');
-            window.location.href = 'index.html';
-        }
-
-        window.onload = loadProfileData;
-    </script>
-</body>
-</html>
+        function loadProfileData() {
+            const currentUser = localSt
