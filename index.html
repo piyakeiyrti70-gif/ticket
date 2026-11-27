@@ -193,15 +193,15 @@
     <h1 id="panel-title">เข้าสู่ระบบ</h1>
     <p class="subtitle" id="panel-subtitle">ยินดีต้อนรับสู่ระบบจองบัตรคอนเสิร์ต</p>
     
-    <form id="auth-form" onsubmit="event.preventDefault(); handleAuth();">
+    <div id="auth-form">
         <div class="form-group">
             <label>ชื่อผู้ใช้งาน</label>
-            <input type="text" id="username" required placeholder="กรอกชื่อผู้ใช้">
+            <input type="text" id="username" placeholder="กรอกชื่อผู้ใช้">
         </div>
 
         <div class="form-group">
             <label>รหัสผ่าน</label>
-            <input type="password" id="password" required placeholder="กรอกรหัสผ่าน">
+            <input type="password" id="password" placeholder="กรอกรหัสผ่าน">
         </div>
 
         <div id="register-fields" class="hidden">
@@ -215,8 +215,8 @@
             </div>
         </div>
 
-        <button type="submit" class="main-btn" id="submit-btn">เข้าสู่ระบบ</button>
-    </form>
+        <button class="main-btn" id="submit-btn" onclick="handleAuth()">เข้าสู่ระบบ</button>
+    </div>
 
     <div class="toggle-section">
         <div class="toggle-text" id="toggle-text">ยังไม่มีบัญชีใช่ไหม?</div>
@@ -286,8 +286,9 @@
         const toggleText = document.getElementById('toggle-text');
         const toggleActionBtn = document.getElementById('toggle-action-btn');
         const registerFields = document.getElementById('register-fields');
-        const form = document.getElementById('auth-form');
 
         if (isLoginMode) {
             panelTitle.innerText = "เข้าสู่ระบบ";
-            panelSubtitle.innerText = "ยินดีต้อ
+            panelSubtitle.innerText = "ยินดีต้อนรับสู่ระบบจองบัตรคอนเสิร์ต";
+            submitBtn.innerText = "เข้าสู่ระบบ";
+            toggleText.innerText = "ยังไ
