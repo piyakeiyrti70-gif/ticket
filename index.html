@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เข้าสู่ระบบ - CONCERT TICKET</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff2a85;
+            --secondary: #7928ca;
+            --accent: #00d2ff;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Kanit', sans-serif; }
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .auth-box {
+            background: rgba(20, 20, 40, 0.85);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 35px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 25px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 5px;
+        }
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .auth-tab.active {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+        }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-size: 0.9rem; color: #ccc; }
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            outline: none;
+        }
+        .form-group input:focus { border-color: var(--accent); }
+        .btn-main {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="auth-box">
+        <h2 style="text-align: center; margin-bottom: 20px;">🎟️ CONCERT PASS</h2>
+        <div class="auth-tabs">
+            <div id="tabLogin" class="auth-tab active" onclick="switchTab('login')">เข้าสู่ระบบ</div>
+            <div id="tabRegister" class="auth-tab" onclick="switchTab('register')">สมัครสมาชิก</div>
+        </div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label>ชื่อผู้ใช้</label>
+                <input type="text" id="loginUsername" required placeholder="กรอกชื่อผู้ใช้">
+            </div>
+            <div class="form-group">
+                <label>รหัสผ่าน</label>
+                <input type="password" id="loginPassword" required placeholder="กรอกรหัสผ่าน">
+            </div>
+            <button type="submit" class="btn-main">เข้าสู่ระบบ</button>
+        </form>
+
+        <form id="registerForm" class="hidden" onsubmit="handleRegister(event)">
+            <div class="form-group">
+                <label>ชื่อผู้ใช้</label>
+                <input type="text" id="regUsername" required placeholder="ตั้งชื่อผู้ใช้">
+            </div>
+            <div class="form-group">
+                <label>รหัสผ่าน</label>
+                <input type="password" id="regPassword" required placeholder="ตั้งรหัสผ่าน">
+            </div>
+            <div class="form-group">
+                <label>เบอร์โทรศัพท์</label>
+                <input type="tel" id="regPhone" required placeholder="08X-XXX-XXXX">
+            </div>
+            <div class="form-group">
+                <label>อีเมล</label>
+                <input type="email" id="regEmail" required placeholder="example@email.com">
+            </div>
+            <button type="submit" class="btn-main">ยืนยันการสมัครสมาชิก</button>
+        </form>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            document.getElementById('loginForm').classList.toggle('hidden', tab === 'register');
+            document.getElementById('registerForm').classList.toggle('hidden', tab === 'login');
+            document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+            document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const username = document.getElementById('regUsername').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const phone = document.getElementById('regPhone').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+
+            let users = JSON.parse(localStorage.getItem('concert_users')) || {};
+            if (users[username]) {
+                alert('ชื่อผู้ใช้นี้มีในระบบแล้ว');
+                return;
+            }
+
+            users[username] = { password, phone, email, balance: 0, history: [] };
+            localStorage.setItem('concert_users', JSON.stringify(users));
+            alert('สมัครสมาชิกสำเร็จ!');
+            switchTab('login');
+            document.getElementById('loginUsername').value = username;
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            let users = JSON.parse(localStorage.getItem('concert_users')) || {};
+            if (users[username] && users[username].password === password) {
+                localStorage.setItem('current_user', username);
+                window.location.href = 'app.html';
+            } else {
+                alert('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง!');
+            }
+        }
+
+        window.onload = () => {
+            if (localStorage.getItem('current_user')) {
+                window.location.href = 'app.html';
+            }
+        };
+    </script>
+</body>
+</html>
