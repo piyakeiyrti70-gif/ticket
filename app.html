@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>หน้าหลัก - CONCERT TICKET</title>
+    <title>จองบัตรคอนเสิร์ต - LIVE TICKET</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -14,100 +14,146 @@
             --text-light: #ffffff;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Kanit', sans-serif; }
-        body { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); color: var(--text-light); min-height: 100vh; }
-        
-        .navbar {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 5%; background: rgba(15, 12, 41, 0.9);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            position: sticky; top: 0; z-index: 100;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Kanit', sans-serif;
         }
-        .logo { font-size: 1.5rem; font-weight: 700; background: linear-gradient(to right, var(--accent), var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        .profile-trigger {
-            display: flex; align-items: center; gap: 10px;
-            background: rgba(255, 255, 255, 0.1); padding: 6px 15px 6px 6px;
-            border-radius: 30px; cursor: pointer; border: 1px solid rgba(255, 255, 255, 0.2);
+
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: var(--text-light);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: rgba(15, 12, 41, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .profile-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 6px 15px 6px 6px;
+            border-radius: 30px;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: 0.3s;
+            text-decoration: none;
+            color: white;
+        }
+
+        .profile-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .avatar-small {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .concert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .concert-card {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            overflow: hidden;
             transition: 0.3s;
         }
-        .profile-trigger:hover { background: rgba(255, 255, 255, 0.2); }
-        .avatar-small {
-            width: 35px; height: 35px; border-radius: 50%;
-            background: linear-gradient(45deg, var(--accent), var(--primary));
-            display: flex; justify-content: center; align-items: center; font-weight: bold;
+
+        .concert-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
         }
 
-        .profile-overlay {
-            display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6);
-            z-index: 200; justify-content: flex-end; opacity: 0; transition: opacity 0.3s ease;
-        }
-        .profile-overlay.show { display: flex; opacity: 1; }
-        .profile-drawer {
-            width: 100%; max-width: 380px; background: #1a1638; height: 100%;
-            padding: 25px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px;
-            transform: translateX(100%); transition: transform 0.3s ease;
-        }
-        .profile-overlay.show .profile-drawer { transform: translateX(0); }
-        .drawer-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 15px; }
-        .close-btn { background: none; border: none; color: white; font-size: 1.8rem; cursor: pointer; line-height: 1; }
-
-        .profile-info-card { text-align: center; background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .avatar-large {
-            width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 10px;
-            background: linear-gradient(45deg, var(--primary), var(--accent));
-            display: flex; justify-content: center; align-items: center; font-size: 2rem; font-weight: bold; border: 3px solid white;
-        }
-        .balance-box { margin-top: 15px; background: rgba(0, 210, 255, 0.15); border: 1px solid var(--accent); padding: 10px; border-radius: 10px; }
-        .balance-amount { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
-
-        .drawer-section { background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .drawer-section h3 { font-size: 1.1rem; margin-bottom: 12px; color: var(--primary); border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 5px; }
-        .history-list { max-height: 180px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
-        .history-item { background: rgba(0, 0, 0, 0.3); padding: 10px; border-radius: 8px; font-size: 0.85rem; border-left: 3px solid var(--accent); }
-
-        .topup-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 10px; }
-        .topup-preset {
-            padding: 8px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white; border-radius: 8px; cursor: pointer; transition: 0.2s;
-        }
-        .topup-preset:hover { background: var(--primary); }
-
-        .custom-topup-container { display: flex; gap: 8px; }
-        .custom-topup-container input {
-            flex: 1; padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.05); color: white; outline: none;
-        }
-        .btn-topup {
-            padding: 8px 15px; border-radius: 8px; border: none; background: var(--accent);
-            color: #000; font-weight: bold; cursor: pointer;
+        .concert-banner {
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.4rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 15px;
         }
 
-        .btn-logout { background: #ff4757; color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600; margin-top: auto; width: 100%; }
+        .concert-body {
+            padding: 20px;
+        }
 
-        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
-        .concert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
-        .concert-card { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 16px; overflow: hidden; transition: 0.3s; }
-        .concert-card:hover { transform: translateY(-5px); border-color: var(--primary); }
-        .concert-banner { height: 150px; display: flex; justify-content: center; align-items: center; font-size: 1.4rem; font-weight: bold; text-align: center; padding: 15px; }
-        .concert-body { padding: 20px; }
-        .zone-select { width: 100%; padding: 10px; margin: 12px 0; border-radius: 8px; background: #1a1638; color: white; border: 1px solid rgba(255, 255, 255, 0.3); }
+        .zone-select {
+            width: 100%;
+            padding: 10px;
+            margin: 12px 0;
+            border-radius: 8px;
+            background: #1a1638;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
         .btn-main {
-            width: 100%; padding: 12px; border: none; border-radius: 10px;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
             background: linear-gradient(45deg, var(--primary), var(--secondary));
-            color: white; font-size: 1rem; font-weight: 600; cursor: pointer; transition: 0.3s;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
         }
-        .btn-main:hover { filter: brightness(1.2); }
+
+        .btn-main:hover {
+            filter: brightness(1.2);
+        }
     </style>
 </head>
 <body>
 
     <nav class="navbar">
         <div class="logo">⚡ LIVE TICKET</div>
-        <div class="profile-trigger" id="profileTriggerBtn">
+        <!-- ปุ่มลิงก์ไปหน้าแยก profile.html -->
+        <a href="profile.html" class="profile-link">
             <div class="avatar-small" id="navAvatar">U</div>
             <span id="navUsername">Username</span>
-        </div>
+        </a>
     </nav>
 
     <div class="container">
@@ -138,45 +184,52 @@
         </div>
     </div>
 
-    <div id="profileOverlay" class="profile-overlay">
-        <div class="profile-drawer">
-            <div class="drawer-header">
-                <h3>โปรไฟล์ของฉัน</h3>
-                <button class="close-btn" id="closeDrawerBtn">&times;</button>
-            </div>
-
-            <div class="profile-info-card">
-                <div class="avatar-large" id="drawerAvatar">U</div>
-                <h3 id="drawerUsername">Username</h3>
-                <p id="drawerDetails" style="font-size: 0.8rem; color: #bbb; margin-top: 5px;"></p>
-                <div class="balance-box">
-                    <div style="font-size: 0.85rem; color: #ccc;">จำนวนเงินคงเหลือ</div>
-                    <div class="balance-amount"><span id="userBalance">0</span> ฿</div>
-                </div>
-            </div>
-
-            <div class="drawer-section">
-                <h3>🎟️ ประวัติการจองตั๋ว</h3>
-                <div id="historyList" class="history-list"></div>
-            </div>
-
-            <div class="drawer-section">
-                <h3>💳 ระบบเติมเงิน</h3>
-                <div class="topup-grid">
-                    <button class="topup-preset" onclick="topUp(1000)">+1,000</button>
-                    <button class="topup-preset" onclick="topUp(3000)">+3,000</button>
-                    <button class="topup-preset" onclick="topUp(5000)">+5,000</button>
-                </div>
-                <div class="custom-topup-container">
-                    <input type="number" id="customTopup" placeholder="ระบุจำนวนเงิน">
-                    <button class="btn-topup" onclick="topUpCustom()">เติมเงิน</button>
-                </div>
-            </div>
-
-            <button class="btn-logout" onclick="logout()">ออกจากระบบ</button>
-        </div>
-    </div>
-
     <script>
-        function loadUserData() {
-            const currentUser = localStorage.g
+        function checkUser() {
+            const currentUser = localStorage.getItem('current_user');
+            if (!currentUser) {
+                window.location.href = 'index.html';
+                return;
+            }
+            const users = JSON.parse(localStorage.getItem('concert_users'));
+            if (!users || !users[currentUser]) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            const firstLetter = currentUser.charAt(0).toUpperCase();
+            document.getElementById('navAvatar').innerText = firstLetter;
+            document.getElementById('navUsername').innerText = currentUser;
+        }
+
+        function bookTicket(concertName, selectId) {
+            const select = document.getElementById(selectId);
+            const [zoneLabel, priceStr] = select.value.split('|');
+            const price = parseInt(priceStr);
+
+            const currentUser = localStorage.getItem('current_user');
+            let users = JSON.parse(localStorage.getItem('concert_users'));
+            let userData = users[currentUser];
+
+            if (userData.balance < price) {
+                alert(`ยอดเงินไม่เพียงพอ! (ต้องการ ${price.toLocaleString()} บาท)\nกรุณาไปที่หน้าโปรไฟล์เพื่อเติมเงิน`);
+                return;
+            }
+
+            userData.balance -= price;
+            const now = new Date().toLocaleString('th-TH');
+            if (!userData.history) userData.history = [];
+            userData.history.unshift({
+                concert: concertName,
+                zone: zoneLabel,
+                date: now
+            });
+
+            localStorage.setItem('concert_users', JSON.stringify(users));
+            alert(`🎉 จองบัตรสำเร็จ!\nคอนเสิร์ต: ${concertName}\nโซน: ${zoneLabel}`);
+        }
+
+        window.onload = checkUser;
+    </script>
+</body>
+</html>
