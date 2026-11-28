@@ -46,6 +46,22 @@
             gap: 8px;
         }
 
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-balance {
+            background: rgba(0, 230, 118, 0.12);
+            border: 1px solid rgba(0, 230, 118, 0.35);
+            color: #00e676;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
         .profile-btn {
             display: flex;
             align-items: center;
@@ -144,7 +160,6 @@
             color: #f3f4f6;
         }
 
-        /* แถวเลือกโซน + จำนวนตั๋ว ให้อยู่ข้างกัน */
         .selection-row {
             display: flex;
             gap: 10px;
@@ -245,7 +260,6 @@
             z-index: -1;
         }
 
-        /* กรอบสีสำหรับหน้าต่างยืนยัน */
         .confirm-box::before {
             background: linear-gradient(135deg, #ff9800, #ff2a85, #8b5cf6);
         }
@@ -309,7 +323,17 @@
             font-size: 1.2rem;
         }
 
-        /* ปุ่มคู่ ยืนยัน / ยกเลิก */
+        .remain-balance-row span {
+            color: #00e676 !important;
+        }
+
+        .error-text {
+            color: #ff6b9d;
+            font-size: 0.9rem;
+            margin-bottom: 14px;
+            min-height: 20px;
+        }
+
         .modal-btn-group {
             display: flex;
             gap: 12px;
@@ -393,6 +417,9 @@
             .selection-row {
                 flex-direction: column;
             }
+            .nav-balance {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -401,10 +428,13 @@
     <!-- Navbar -->
     <nav class="navbar">
         <a href="app.html" class="logo">⚡ LIVE TICKET</a>
-        <a href="profile.html" class="profile-btn">
-            <div class="avatar" id="userAvatar">U</div>
-            <span id="userName">paman</span>
-        </a>
+        <div class="nav-right">
+            <div class="nav-balance" id="navBalance">คงเหลือ: 10,501 ฿</div>
+            <a href="profile.html" class="profile-btn">
+                <div class="avatar" id="userAvatar">U</div>
+                <span id="userName">paman</span>
+            </a>
+        </div>
     </nav>
 
     <!-- Main Content -->
@@ -523,8 +553,10 @@
                 <p>คอนเสิร์ต: <span id="confirmConcert">-</span></p>
                 <p>โซนที่เลือก: <span id="confirmZone">-</span></p>
                 <p>จำนวนบัตร: <span id="confirmQty">-</span></p>
+                <p>เงินคงเหลือปัจจุบัน: <span id="confirmCurrentBalance">-</span></p>
                 <p class="total-price-row">ยอดชำระรวม: <span id="confirmTotal">-</span></p>
             </div>
+            <div class="error-text" id="confirmError"></div>
             <div class="modal-btn-group">
                 <button class="btn-cancel" onclick="closeConfirmModal()">ยกเลิก</button>
                 <button class="btn-confirm" onclick="confirmBooking()">ยืนยันการจอง</button>
@@ -542,34 +574,46 @@
                 <p>โซนที่เลือก: <span id="modalZone">-</span></p>
                 <p>จำนวน: <span id="modalQty">-</span></p>
                 <p class="total-price-row">ชำระเรียบร้อย: <span id="modalTotal">-</span></p>
+                <p class="remain-balance-row">ยอดเงินคงเหลือ: <span id="modalRemainingBalance">-</span></p>
             </div>
             <button class="modal-close-btn" onclick="closeSuccessModal()">ตกลง / ปิดหน้าต่าง</button>
         </div>
     </div>
 
     <script>
-        // เก็บข้อมูลรายการที่กำลังรอยืนยัน
         let pendingBooking = null;
 
-        // ดึงชื่อผู้ใช้จาก localStorage
+        function getCurrentBalance() {
+            const raw = localStorage.getItem('balance');
+            if (raw === null || isNaN(Number(raw))) {
+                localStorage.setItem('balance', '10501');
+                return 10501;
+            }
+            return Number(raw);
+        }
+
+        function updateNavBalance() {
+            document.getElementById('navBalance').textContent = 'คงเหลือ: ' + getCurrentBalance().toLocaleString() + ' ฿';
+        }
+
         window.onload = function() {
             const savedUser = localStorage.getItem('currentUser') || localStorage.getItem('username');
             if (savedUser) {
                 document.getElementById('userName').textContent = savedUser;
                 document.getElementById('userAvatar').textContent = savedUser.charAt(0).toUpperCase();
             }
+            updateNavBalance();
         };
 
-        // ขั้นที่ 1: กดปุ่มจองบัตร -> เปิดหน้าต่างให้ลูกค้าตรวจสอบและยืนยัน/ยกเลิก
         function openConfirmModal(concertName, zoneSelectId, qtySelectId) {
             const zoneEl = document.getElementById(zoneSelectId);
             const selectedOption = zoneEl.options[zoneEl.selectedIndex];
             const zoneName = selectedOption.value;
-            const unitPrice = parseInt(selectedOption.getAttribute('data-price'));
-            const quantity = parseInt(document.getElementById(qtySelectId).value);
+            const unitPrice = parseInt(selectedOption.getAttribute('data-price'), 10);
+            const quantity = parseInt(document.getElementById(qtySelectId).value, 10);
             const totalPrice = unitPrice * quantity;
+            const currentBalance = getCurrentBalance();
 
-            // เก็บข้อมูลชั่วคราวไว้รอการยืนยัน
             pendingBooking = {
                 concert: concertName,
                 zone: zoneName,
@@ -578,29 +622,44 @@
                 totalPrice: totalPrice
             };
 
-            // แสดงรายละเอียดในหน้าต่างยืนยัน
             document.getElementById('confirmConcert').textContent = concertName;
             document.getElementById('confirmZone').textContent = 'โซน ' + zoneName + ' (' + unitPrice.toLocaleString() + ' บ.)';
             document.getElementById('confirmQty').textContent = quantity + ' ใบ';
+            document.getElementById('confirmCurrentBalance').textContent = currentBalance.toLocaleString() + ' บาท';
             document.getElementById('confirmTotal').textContent = totalPrice.toLocaleString() + ' บาท';
+
+            const errEl = document.getElementById('confirmError');
+            if (currentBalance < totalPrice) {
+                errEl.textContent = 'ยอดเงินคงเหลือไม่เพียงพอ กรุณาเติมเงินที่หน้าโปรไฟล์ก่อนครับ';
+            } else {
+                errEl.textContent = '';
+            }
 
             document.getElementById('confirmModal').classList.add('active');
         }
 
-        // หากลูกค้ากด "ยกเลิก"
         function closeConfirmModal() {
             pendingBooking = null;
+            document.getElementById('confirmError').textContent = '';
             document.getElementById('confirmModal').classList.remove('active');
         }
 
-        // ขั้นที่ 2: หากลูกค้ากด "ยืนยันการจอง" -> บันทึกข้อมูลและแสดงหน้าต่างสำเร็จ
         function confirmBooking() {
             if (!pendingBooking) return;
 
-            // ปิดหน้าต่างยืนยัน
+            const currentBalance = getCurrentBalance();
+            if (currentBalance < pendingBooking.totalPrice) {
+                document.getElementById('confirmError').textContent = 'ยอดเงินคงเหลือไม่เพียงพอ กรุณาเติมเงินที่หน้าโปรไฟล์ก่อนครับ';
+                return;
+            }
+
+            // หักเงินและบันทึกลง localStorage
+            const newBalance = currentBalance - pendingBooking.totalPrice;
+            localStorage.setItem('balance', String(newBalance));
+            updateNavBalance();
+
             document.getElementById('confirmModal').classList.remove('active');
 
-            // บันทึกลง localStorage
             const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
             bookings.push({
                 concert: pendingBooking.concert,
@@ -611,17 +670,16 @@
             });
             localStorage.setItem('bookings', JSON.stringify(bookings));
 
-            // แสดงข้อมูลในหน้าต่างจองสำเร็จ
             document.getElementById('modalConcert').textContent = pendingBooking.concert;
             document.getElementById('modalZone').textContent = 'โซน ' + pendingBooking.zone;
             document.getElementById('modalQty').textContent = pendingBooking.quantity + ' ใบ';
             document.getElementById('modalTotal').textContent = pendingBooking.totalPrice.toLocaleString() + ' บาท';
+            document.getElementById('modalRemainingBalance').textContent = newBalance.toLocaleString() + ' บาท';
 
             document.getElementById('successModal').classList.add('active');
             pendingBooking = null;
         }
 
-        // ปิดหน้าต่างจองสำเร็จ
         function closeSuccessModal() {
             document.getElementById('successModal').classList.remove('active');
         }
