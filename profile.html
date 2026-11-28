@@ -667,8 +667,10 @@
         }
 
         function logout() {
+            // ล้างข้อมูลผู้ใช้ออกจากระบบอย่างสมบูรณ์
             localStorage.removeItem('currentUser');
             localStorage.removeItem('username');
+            // นำทางกลับไปยังหน้าล็อกอินเริ่มต้น
             window.location.href = 'index.html';
         }
 
