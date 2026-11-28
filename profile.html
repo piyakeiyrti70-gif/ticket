@@ -127,133 +127,7 @@
             color: #00e676;
         }
 
-        /* Top-up Box */
-        .panel-card {
-            background: #181430;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 24px;
-            margin-bottom: 32px;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
-        }
-
-        .panel-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .quick-amounts {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 14px;
-        }
-
-        .quick-btn {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            color: #e5e7eb;
-            padding: 7px 14px;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .quick-btn:hover {
-            border-color: #00e5ff;
-            color: #00e5ff;
-            background: rgba(0, 229, 255, 0.08);
-        }
-
-        .topup-row {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-bottom: 14px;
-        }
-
-        .topup-input {
-            flex: 1;
-            min-width: 180px;
-            padding: 12px 16px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            background: #100d24;
-            color: #ffffff;
-            font-size: 1rem;
-            outline: none;
-        }
-
-        .topup-input:focus {
-            border-color: #00e676;
-        }
-
-        .topup-btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 12px;
-            background: linear-gradient(90deg, #00b09b, #00e676);
-            color: #0b0918;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .topup-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 230, 118, 0.35);
-        }
-
-        .slip-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 12px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px dashed rgba(255, 255, 255, 0.16);
-            border-radius: 14px;
-            padding: 12px 16px;
-        }
-
-        .slip-label {
-            font-size: 0.9rem;
-            color: #cbd5e1;
-        }
-
-        .slip-preview {
-            display: none;
-            margin-top: 12px;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .slip-preview.show {
-            display: flex;
-        }
-
-        .slip-preview img {
-            width: 64px;
-            height: 64px;
-            object-fit: cover;
-            border-radius: 10px;
-            border: 1px solid rgba(0, 229, 255, 0.4);
-        }
-
-        .status-msg {
-            margin-top: 12px;
-            font-size: 0.92rem;
-            min-height: 20px;
-            color: #00e676;
-        }
-
-        /* History Section */
+        /* History Section (ย้ายขึ้นมาไว้ด้านบน) */
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -284,6 +158,7 @@
             display: flex;
             flex-direction: column;
             gap: 18px;
+            margin-bottom: 32px;
         }
 
         .e-ticket {
@@ -438,6 +313,131 @@
             color: #9ca3af;
         }
 
+        /* Top-up Box (ย้ายมาไว้ด้านล่าง) */
+        .panel-card {
+            background: #181430;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .panel-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quick-amounts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .quick-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: #e5e7eb;
+            padding: 7px 14px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .quick-btn:hover {
+            border-color: #00e5ff;
+            color: #00e5ff;
+            background: rgba(0, 229, 255, 0.08);
+        }
+
+        .topup-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+
+        .topup-input {
+            flex: 1;
+            min-width: 180px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: #100d24;
+            color: #ffffff;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .topup-input:focus {
+            border-color: #00e676;
+        }
+
+        .topup-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #00b09b, #00e676);
+            color: #0b0918;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .topup-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 230, 118, 0.35);
+        }
+
+        .slip-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px dashed rgba(255, 255, 255, 0.16);
+            border-radius: 14px;
+            padding: 12px 16px;
+        }
+
+        .slip-label {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+
+        .slip-preview {
+            display: none;
+            margin-top: 12px;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .slip-preview.show {
+            display: flex;
+        }
+
+        .slip-preview img {
+            width: 64px;
+            height: 64px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 229, 255, 0.4);
+        }
+
+        .status-msg {
+            margin-top: 12px;
+            font-size: 0.92rem;
+            min-height: 20px;
+            color: #00e676;
+        }
+
         @media (max-width: 650px) {
             .e-ticket {
                 flex-direction: column;
@@ -488,7 +488,16 @@
             </div>
         </div>
 
-        <!-- ระบบเติมเงิน -->
+        <!-- หัวข้อประวัติการจอง (ย้ายมาไว้ด้านบน) -->
+        <div class="section-header">
+            <h2 class="section-title">🎟️ ประวัติการจองบัตร (E-Ticket)</h2>
+            <span class="ticket-count-badge" id="ticketCountBadge">0 รายการ</span>
+        </div>
+
+        <!-- รายการตั๋ว -->
+        <div class="ticket-list" id="ticketList"></div>
+
+        <!-- ระบบเติมเงิน (ย้ายมาไว้ด้านล่าง) -->
         <div class="panel-card">
             <div class="panel-title">💳 ระบบเติมเงิน (ผ่าน QR Code / สลิป)</div>
 
@@ -516,15 +525,6 @@
 
             <div class="status-msg" id="topupMsg"></div>
         </div>
-
-        <!-- หัวข้อประวัติการจอง -->
-        <div class="section-header">
-            <h2 class="section-title">🎟️ ประวัติการจองบัตร (E-Ticket)</h2>
-            <span class="ticket-count-badge" id="ticketCountBadge">0 รายการ</span>
-        </div>
-
-        <!-- รายการตั๋ว -->
-        <div class="ticket-list" id="ticketList"></div>
     </div>
 
     <script>
