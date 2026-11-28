@@ -6,14 +6,6 @@
     <title>โปรไฟล์ของฉัน - CONCERT TICKET</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #ff2a85;
-            --secondary: #7928ca;
-            --accent: #00d2ff;
-            --bg-dark: #0f0c29;
-            --text-light: #ffffff;
-        }
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -22,406 +14,411 @@
         }
 
         body {
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            color: var(--text-light);
+            background: radial-gradient(circle at top, #1d183b 0%, #0b0918 100%);
+            color: #ffffff;
             min-height: 100vh;
-            padding: 20px;
+            padding-bottom: 60px;
         }
 
-        .profile-container {
-            max-width: 600px;
-            margin: 20px auto;
-            background: rgba(20, 20, 40, 0.9);
-            padding: 30px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-
-        .header-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 15px;
+        .container {
+            max-width: 900px;
+            margin: 35px auto;
+            padding: 0 20px;
         }
 
         .back-link {
-            color: var(--accent);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #a5b4fc;
             text-decoration: none;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            font-size: 0.95rem;
+            margin-bottom: 22px;
+            transition: 0.2s;
         }
 
-        .profile-info-card {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 20px;
-            border-radius: 15px;
+        .back-link:hover {
+            color: #ff2a85;
+            transform: translateX(-3px);
+        }
+
+        /* Profile Card */
+        .profile-card {
+            background: linear-gradient(145deg, #1b1736, #120f26);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 36px 24px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45);
+            margin-bottom: 35px;
         }
 
-        .avatar-large {
-            width: 90px;
-            height: 90px;
+        .profile-avatar {
+            width: 84px;
+            height: 84px;
             border-radius: 50%;
-            margin: 0 auto 15px;
-            background: linear-gradient(45deg, var(--primary), var(--accent));
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
             display: flex;
-            justify-content: center;
             align-items: center;
-            font-size: 2.5rem;
-            font-weight: bold;
-            border: 4px solid white;
+            justify-content: center;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin: 0 auto 14px;
+            box-shadow: 0 8px 25px rgba(0, 198, 255, 0.35);
+        }
+
+        .profile-name {
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .profile-meta {
+            color: #9ca3af;
+            font-size: 0.92rem;
+            margin-bottom: 22px;
         }
 
         .balance-box {
-            margin-top: 15px;
-            background: rgba(0, 210, 255, 0.15);
-            border: 1px solid var(--accent);
-            padding: 15px;
-            border-radius: 12px;
+            display: inline-block;
+            background: rgba(13, 11, 30, 0.9);
+            border: 1px solid rgba(0, 230, 118, 0.35);
+            border-radius: 18px;
+            padding: 16px 34px;
+        }
+
+        .balance-label {
+            font-size: 0.85rem;
+            color: #9ca3af;
+            margin-bottom: 4px;
         }
 
         .balance-amount {
-            font-size: 2rem;
+            font-size: 1.9rem;
             font-weight: 700;
-            color: var(--accent);
+            color: #00e676;
+        }
+
+        /* History Section */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 22px;
         }
 
         .section-title {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            color: var(--primary);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 5px;
+            font-size: 1.35rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .history-list {
-            max-height: 250px;
-            overflow-y: auto;
+        .ticket-count-badge {
+            background: linear-gradient(90deg, #ff2a85, #9c27b0);
+            padding: 4px 14px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* E-Ticket Cards */
+        .ticket-list {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 18px;
         }
 
-        .history-item {
-            background: rgba(0, 0, 0, 0.4);
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            border-left: 4px solid var(--accent);
-        }
-
-        .topup-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .topup-preset {
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.2s;
-        }
-
-        .topup-preset:hover {
-            background: var(--primary);
-            border-color: var(--primary);
-        }
-
-        .custom-topup {
+        .e-ticket {
             display: flex;
-            gap: 10px;
+            background: #181430;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+            position: relative;
+            transition: transform 0.25s ease, border-color 0.25s ease;
         }
 
-        .custom-topup input {
+        .e-ticket:hover {
+            transform: translateY(-3px);
+            border-color: rgba(0, 229, 255, 0.45);
+        }
+
+        /* แถบสีด้านซ้ายของตั๋ว */
+        .ticket-strip {
+            width: 12px;
+            background: linear-gradient(180deg, #ff2a85, #00e5ff);
+            flex-shrink: 0;
+        }
+
+        .ticket-strip.theme-starlight {
+            background: linear-gradient(180deg, #00e5ff, #1565c0);
+        }
+
+        .ticket-strip.theme-cyberpunk {
+            background: linear-gradient(180deg, #ffea00, #ff6f00);
+        }
+
+        .ticket-strip.theme-midnight {
+            background: linear-gradient(180deg, #00e676, #00897b);
+        }
+
+        /* ส่วนรายละเอียดหลักของตั๋ว */
+        .ticket-main {
             flex: 1;
-            padding: 12px 15px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.05);
-            color: white;
-            outline: none;
+            padding: 20px 24px;
+            border-right: 2px dashed rgba(255, 255, 255, 0.16);
+            position: relative;
         }
 
-        .btn-topup {
-            padding: 10px 20px;
-            border-radius: 10px;
-            border: none;
-            background: var(--accent);
-            color: #000;
-            font-weight: bold;
-            cursor: pointer;
+        /* รอยปรุครึ่งวงกลมด้านบน-ล่าง */
+        .ticket-main::before,
+        .ticket-main::after {
+            content: "";
+            position: absolute;
+            right: -11px;
+            width: 20px;
+            height: 20px;
+            background: #0f0c22;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .btn-logout {
-            background: #ff4757;
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: 0.2s;
-            width: 100%;
+        .ticket-main::before {
+            top: -11px;
         }
 
-        .btn-logout:hover {
-            filter: brightness(1.2);
+        .ticket-main::after {
+            bottom: -11px;
         }
 
-        /* QR Modal Styles */
-        .qr-modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(5px);
-            z-index: 999;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .qr-modal-overlay.active {
+        .ticket-top-row {
             display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
         }
 
-        .qr-modal-box {
-            background: #1a1638;
-            border: 1px solid var(--accent);
-            border-radius: 20px;
-            padding: 25px;
-            width: 100%;
-            max-width: 380px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 210, 255, 0.3);
-        }
-
-        .qr-image-wrapper {
-            background: white;
-            padding: 10px;
-            border-radius: 15px;
-            margin: 15px auto;
-            max-width: 260px;
-        }
-
-        .qr-image-wrapper img {
-            width: 100%;
-            height: auto;
-            display: block;
+        .ticket-code {
+            font-size: 0.8rem;
+            color: #00e5ff;
+            background: rgba(0, 229, 255, 0.1);
+            padding: 3px 10px;
             border-radius: 8px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
-        .qr-amount-badge {
-            background: rgba(0, 210, 255, 0.15);
-            color: var(--accent);
-            padding: 8px 15px;
-            border-radius: 20px;
+        .ticket-status {
+            font-size: 0.8rem;
+            color: #00e676;
+            background: rgba(0, 230, 118, 0.12);
+            padding: 3px 10px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .ticket-concert {
             font-size: 1.2rem;
-            font-weight: bold;
-            display: inline-block;
+            font-weight: 700;
+            color: #ffffff;
             margin-bottom: 10px;
         }
 
-        .modal-actions {
+        .ticket-badges {
             display: flex;
+            flex-wrap: wrap;
             gap: 10px;
-            margin-top: 20px;
+            margin-bottom: 10px;
         }
 
-        .btn-confirm-pay {
-            flex: 2;
-            padding: 12px;
-            border: none;
+        .badge-item {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 4px 12px;
             border-radius: 10px;
-            background: #2ed573;
-            color: #000;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.2s;
+            font-size: 0.88rem;
+            color: #e5e7eb;
         }
 
-        .btn-confirm-pay:hover {
-            filter: brightness(1.1);
+        .badge-item strong {
+            color: #ff7ae6;
         }
 
-        .btn-cancel-pay {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-            background: transparent;
-            color: white;
-            cursor: pointer;
+        .ticket-date {
+            font-size: 0.82rem;
+            color: #9ca3af;
+        }
+
+        /* ส่วนสรุปยอดด้านขวาของตั๋ว */
+        .ticket-side {
+            min-width: 165px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .side-label {
+            font-size: 0.78rem;
+            color: #9ca3af;
+            margin-bottom: 4px;
+        }
+
+        .side-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ffea00;
+        }
+
+        .empty-state {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 18px;
+            padding: 40px 20px;
+            text-align: center;
+            color: #9ca3af;
+        }
+
+        @media (max-width: 650px) {
+            .e-ticket {
+                flex-direction: column;
+            }
+
+            .ticket-strip {
+                width: 100%;
+                height: 8px;
+            }
+
+            .ticket-main {
+                border-right: none;
+                border-bottom: 2px dashed rgba(255, 255, 255, 0.16);
+            }
+
+            .ticket-main::before,
+            .ticket-main::after {
+                display: none;
+            }
+
+            .ticket-side {
+                flex-direction: row;
+                justify-content: space-between;
+                min-width: auto;
+                padding: 14px 24px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="profile-container">
-        <div class="header-nav">
-            <a href="app.html" class="back-link">← กลับไปหน้าจองบัตร</a>
-            <h2>จัดการโปรไฟล์</h2>
-        </div>
+    <div class="container">
+        <a href="app.html" class="back-link">← กลับไปหน้าจองบัตร</a>
 
-        <div class="profile-info-card">
-            <div class="avatar-large" id="profileAvatar">U</div>
-            <h2 id="profileUsername">Username</h2>
-            <p id="profileDetails" style="font-size: 0.9rem; color: #bbb; margin-top: 5px;"></p>
-            
+        <!-- การ์ดข้อมูลผู้ใช้ -->
+        <div class="profile-card">
+            <div class="profile-avatar" id="profileAvatar">P</div>
+            <div class="profile-name" id="profileName">paman</div>
+            <div class="profile-meta" id="profileMeta">อีเมล: piyakeiyrt170@gmail.com | เบอร์โทร: 0939782430</div>
+
             <div class="balance-box">
-                <div style="font-size: 0.9rem; color: #ccc;">จำนวนเงินคงเหลือ</div>
-                <div class="balance-amount"><span id="userBalance">0</span> ฿</div>
+                <div class="balance-label">จำนวนเงินคงเหลือ</div>
+                <div class="balance-amount" id="balanceAmount">10,501 ฿</div>
             </div>
         </div>
 
-        <div>
-            <h3 class="section-title">🎟️ ประวัติการจองตั๋ว</h3>
-            <div id="historyList" class="history-list"></div>
+        <!-- หัวข้อประวัติการจอง -->
+        <div class="section-header">
+            <h2 class="section-title">🎟️ ประวัติการจองบัตร (E-Ticket)</h2>
+            <span class="ticket-count-badge" id="ticketCountBadge">0 รายการ</span>
         </div>
 
-        <div>
-            <h3 class="section-title">💳 ระบบเติมเงิน (สแกน QR Code)</h3>
-            <div class="topup-grid">
-                <button class="topup-preset" onclick="window.openQRModal(1000)">+1,000</button>
-                <button class="topup-preset" onclick="window.openQRModal(3000)">+3,000</button>
-                <button class="topup-preset" onclick="window.openQRModal(5000)">+5,000</button>
-            </div>
-            <div class="custom-topup">
-                <input type="number" id="customTopup" placeholder="ระบุจำนวนเงินที่ต้องการเติม">
-                <button class="btn-topup" onclick="window.openCustomQRModal()">เติมเงิน</button>
-            </div>
-        </div>
-
-        <button class="btn-logout" onclick="window.logout()">ออกจากระบบ</button>
-    </div>
-
-    <!-- QR Modal -->
-    <div id="qrModal" class="qr-modal-overlay">
-        <div class="qr-modal-box">
-            <h3 style="margin-bottom: 10px; color: white;">สแกน QR Code เพื่อเติมเงิน</h3>
-            <div class="qr-amount-badge">ยอดชำระ: <span id="modalTopupAmount">0</span> ฿</div>
-            
-            <div class="qr-image-wrapper">
-                <img src="qr.jpg" alt="Thai QR Payment PromptPay" onerror="this.src='https://via.placeholder.com/250x300?text=ไม่พบไฟล์+qr.jpg'">
-            </div>
-            
-            <p style="font-size: 0.85rem; color: #ccc;">ชื่อบัญชี: นาย ปิยะเกียรติ เกตุไชโย<br>เมื่อโอนเงินเสร็จสิ้น กรุณากดปุ่มยืนยันด้านล่าง</p>
-            
-            <div class="modal-actions">
-                <button class="btn-cancel-pay" onclick="window.closeQRModal()">ยกเลิก</button>
-                <button class="btn-confirm-pay" onclick="window.confirmPayment()">✅ ยืนยันการชำระเงิน</button>
-            </div>
-        </div>
+        <!-- รายการตั๋ว -->
+        <div class="ticket-list" id="ticketList"></div>
     </div>
 
     <script>
-        window.pendingTopupAmount = 0;
+        function getThemeClass(concertName) {
+            const upper = (concertName || '').toUpperCase();
+            if (upper.includes('STARLIGHT')) return 'theme-starlight';
+            if (upper.includes('CYBERPUNK')) return 'theme-cyberpunk';
+            if (upper.includes('MIDNIGHT')) return 'theme-midnight';
+            return '';
+        }
 
-        window.loadProfileData = function() {
-            const currentUser = localStorage.getItem('current_user');
-            if (!currentUser) {
-                window.location.href = 'index.html';
-                return;
+        function renderBookings() {
+            const savedUser = localStorage.getItem('currentUser') || localStorage.getItem('username') || 'paman';
+            document.getElementById('profileName').textContent = savedUser;
+            document.getElementById('profileAvatar').textContent = savedUser.charAt(0).toUpperCase();
+
+            const savedBalance = localStorage.getItem('balance');
+            if (savedBalance !== null && !isNaN(Number(savedBalance))) {
+                document.getElementById('balanceAmount').textContent = Number(savedBalance).toLocaleString() + ' ฿';
             }
-            const users = JSON.parse(localStorage.getItem('concert_users'));
-            if (!users || !users[currentUser]) {
-                window.location.href = 'index.html';
-                return;
-            }
-            const userData = users[currentUser];
 
-            const firstLetter = currentUser.charAt(0).toUpperCase();
-            document.getElementById('profileAvatar').innerText = firstLetter;
-            document.getElementById('profileUsername').innerText = currentUser;
-            document.getElementById('profileDetails').innerText = `อีเมล: ${userData.email} | เบอร์โทร: ${userData.phone}`;
-            
-            window.updateBalanceAndHistory();
-        };
+            const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+            const listEl = document.getElementById('ticketList');
+            const badgeEl = document.getElementById('ticketCountBadge');
 
-        window.updateBalanceAndHistory = function() {
-            const currentUser = localStorage.getItem('current_user');
-            const users = JSON.parse(localStorage.getItem('concert_users'));
-            if (!users || !users[currentUser]) return;
-            const userData = users[currentUser];
+            badgeEl.textContent = bookings.length + ' รายการ';
 
-            document.getElementById('userBalance').innerText = userData.balance.toLocaleString();
-
-            const historyList = document.getElementById('historyList');
-            if (!userData.history || userData.history.length === 0) {
-                historyList.innerHTML = '<p style="color: #888; font-size: 0.9rem; text-align: center; padding: 20px;">ยังไม่มีประวัติการจอง</p>';
-            } else {
-                historyList.innerHTML = userData.history.map(item => `
-                    <div class="history-item">
-                        <strong>คอนเสิร์ต: ${item.concert}</strong><br>
-                        <span>โซน: ${item.zone}</span><br>
-                        <small style="color: #aaa;">วันที่จอง: ${item.date}</small>
+            if (bookings.length === 0) {
+                listEl.innerHTML = `
+                    <div class="empty-state">
+                        ยังไม่มีประวัติการจองบัตร ลองเลือกคอนเสิร์ตที่ถูกใจจากหน้าจองบัตรได้เลยครับ
                     </div>
-                `).join('');
-            }
-        };
-
-        window.openQRModal = function(amount) {
-            window.pendingTopupAmount = amount;
-            document.getElementById('modalTopupAmount').innerText = amount.toLocaleString();
-            document.getElementById('qrModal').classList.add('active');
-        };
-
-        window.openCustomQRModal = function() {
-            const input = document.getElementById('customTopup');
-            const amount = parseInt(input.value);
-            if (!amount || amount <= 0) {
-                alert('กรุณาระบุจำนวนเงินที่ถูกต้อง');
+                `;
                 return;
             }
-            window.openQRModal(amount);
-            input.value = '';
-        };
 
-        window.closeQRModal = function() {
-            window.pendingTopupAmount = 0;
-            document.getElementById('qrModal').classList.remove('active');
-        };
+            // แสดงรายการล่าสุดขึ้นก่อน โดยคงเลขลำดับตั๋วเดิมไว้
+            const indexedBookings = bookings.map((item, idx) => ({ ...item, index: idx }));
+            indexedBookings.reverse();
 
-        window.confirmPayment = function() {
-            if (window.pendingTopupAmount <= 0) return;
+            listEl.innerHTML = indexedBookings.map((item) => {
+                const ticketCode = item.ticketCode || ('#TKT-' + String(1001 + item.index));
+                const concertTitle = item.concert || 'CONCERT TICKET';
+                const zoneText = item.zone || '-';
+                const qtyText = item.quantity ? (item.quantity + ' ใบ') : '1 ใบ';
+                const priceText = item.totalPrice
+                    ? (Number(item.totalPrice).toLocaleString() + ' บาท')
+                    : 'ชำระแล้ว';
+                const dateText = item.date || '-';
+                const themeClass = getThemeClass(concertTitle);
 
-            const currentUser = localStorage.getItem('current_user');
-            let users = JSON.parse(localStorage.getItem('concert_users'));
-            if (users && users[currentUser]) {
-                users[currentUser].balance += window.pendingTopupAmount;
-                localStorage.setItem('concert_users', JSON.stringify(users));
-            }
-            
-            const addedAmount = window.pendingTopupAmount;
-            window.closeQRModal();
-            window.updateBalanceAndHistory();
-            alert(`🎉 เติมเงินสำเร็จ +${addedAmount.toLocaleString()} บาท`);
-        };
+                return `
+                    <div class="e-ticket">
+                        <div class="ticket-strip ${themeClass}"></div>
+                        <div class="ticket-main">
+                            <div class="ticket-top-row">
+                                <span class="ticket-code">${ticketCode}</span>
+                                <span class="ticket-status">✓ ยืนยันการจองแล้ว</span>
+                            </div>
+                            <div class="ticket-concert">${concertTitle}</div>
+                            <div class="ticket-badges">
+                                <span class="badge-item">โซน: <strong>${zoneText}</strong></span>
+                                <span class="badge-item">จำนวน: <strong>${qtyText}</strong></span>
+                            </div>
+                            <div class="ticket-date">จองเมื่อ: ${dateText}</div>
+                        </div>
+                        <div class="ticket-side">
+                            <div class="side-label">ยอดชำระรวม</div>
+                            <div class="side-price">${priceText}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
 
-        window.logout = function() {
-            localStorage.removeItem('current_user');
-            window.location.href = 'index.html';
-        };
-
-        window.onload = function() {
-            window.loadProfileData();
-        };
+        window.onload = renderBookings;
     </script>
+
 </body>
 </html>
