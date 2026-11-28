@@ -128,7 +128,6 @@
             text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
         }
 
-        /* สีพื้นหลังแบนเนอร์แต่ละคอนเสิร์ต */
         .banner-1 { background: linear-gradient(135deg, #d81b60, #6a1b9a); }
         .banner-2 { background: linear-gradient(135deg, #00838f, #1565c0); }
         .banner-3 { background: linear-gradient(135deg, #ff6f00, #d84315); }
@@ -145,21 +144,42 @@
             color: #f3f4f6;
         }
 
+        /* แถวเลือกโซน + จำนวนตั๋ว ให้อยู่ข้างกัน */
+        .selection-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
         .zone-select {
-            width: 100%;
-            padding: 13px 16px;
+            flex: 2.2;
+            padding: 13px 14px;
             border-radius: 12px;
             background: #110f24;
             color: #fff;
             border: 1px solid rgba(255, 255, 255, 0.15);
             font-size: 0.95rem;
-            margin-bottom: 18px;
             outline: none;
             cursor: pointer;
             transition: 0.2s;
         }
 
-        .zone-select:focus {
+        .qty-select {
+            flex: 1;
+            padding: 13px 12px;
+            border-radius: 12px;
+            background: #110f24;
+            color: #00e5ff;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            font-size: 0.95rem;
+            outline: none;
+            cursor: pointer;
+            transition: 0.2s;
+            text-align: center;
+        }
+
+        .zone-select:focus, .qty-select:focus {
             border-color: #ff2a85;
         }
 
@@ -184,11 +204,11 @@
             transform: scale(0.98);
         }
 
-        /* Custom Colorful Modal (หน้าต่างแจ้งเตือนแบบมีสีสัน) */
+        /* Modal Overlay */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(8, 7, 20, 0.8);
+            background: rgba(8, 7, 20, 0.82);
             backdrop-filter: blur(8px);
             display: none;
             align-items: center;
@@ -209,7 +229,7 @@
             position: relative;
             border-radius: 24px;
             padding: 32px 28px;
-            max-width: 400px;
+            max-width: 420px;
             width: 100%;
             text-align: center;
             box-shadow: 0 20px 50px rgba(255, 42, 133, 0.35);
@@ -225,15 +245,20 @@
             z-index: -1;
         }
 
+        /* กรอบสีสำหรับหน้าต่างยืนยัน */
+        .confirm-box::before {
+            background: linear-gradient(135deg, #ff9800, #ff2a85, #8b5cf6);
+        }
+
         .modal-icon {
-            font-size: 3.5rem;
+            font-size: 3.3rem;
             margin-bottom: 10px;
             display: inline-block;
             animation: bounce 1s infinite alternate;
         }
 
         .modal-title {
-            font-size: 1.6rem;
+            font-size: 1.55rem;
             font-weight: 700;
             background: linear-gradient(90deg, #00e5ff, #ff2a85);
             -webkit-background-clip: text;
@@ -241,24 +266,90 @@
             margin-bottom: 16px;
         }
 
+        .confirm-title {
+            background: linear-gradient(90deg, #ffea00, #ff7a00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         .modal-details {
             background: rgba(255, 255, 255, 0.06);
             border-radius: 14px;
-            padding: 16px;
+            padding: 16px 18px;
             margin-bottom: 24px;
             text-align: left;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .modal-details p {
-            margin: 6px 0;
-            font-size: 1rem;
+            margin: 8px 0;
+            font-size: 0.98rem;
             color: #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
         }
 
         .modal-details span {
             color: #00e5ff;
             font-weight: 600;
+            text-align: right;
+        }
+
+        .total-price-row {
+            margin-top: 12px !important;
+            padding-top: 10px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.2);
+            font-size: 1.1rem !important;
+            font-weight: 700;
+        }
+
+        .total-price-row span {
+            color: #ffea00 !important;
+            font-size: 1.2rem;
+        }
+
+        /* ปุ่มคู่ ยืนยัน / ยกเลิก */
+        .modal-btn-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-cancel {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 12px;
+            background: rgba(255, 65, 108, 0.15);
+            color: #ff6b8b;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-cancel:hover {
+            background: rgba(255, 65, 108, 0.3);
+            color: #fff;
+        }
+
+        .btn-confirm {
+            flex: 1.3;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #00b09b, #00e676);
+            color: #0d0b1e;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(0, 230, 118, 0.35);
+            transition: 0.2s;
+        }
+
+        .btn-confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 230, 118, 0.55);
         }
 
         .modal-close-btn {
@@ -299,6 +390,9 @@
             .concert-grid {
                 grid-template-columns: 1fr;
             }
+            .selection-row {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -323,13 +417,23 @@
                 <div class="card-banner banner-1">NEON WORLD TOUR</div>
                 <div class="card-body">
                     <div class="concert-name">NEON WORLD TOUR IN BANGKOK</div>
-                    <select class="zone-select" id="zone-1">
-                        <option value="VIP - 5,500 บาท">โซน VIP - 5,500 บาท</option>
-                        <option value="A - 4,500 บาท">โซน A - 4,500 บาท</option>
-                        <option value="B - 3,500 บาท">โซน B - 3,500 บาท</option>
-                        <option value="C - 2,500 บาท">โซน C - 2,500 บาท</option>
-                    </select>
-                    <button class="book-btn" onclick="bookTicket('NEON WORLD TOUR IN BANGKOK', 'zone-1')">จองบัตร</button>
+                    <div class="selection-row">
+                        <select class="zone-select" id="zone-1">
+                            <option value="VIP" data-price="5500">โซน VIP - 5,500 บาท</option>
+                            <option value="A" data-price="4500">โซน A - 4,500 บาท</option>
+                            <option value="B" data-price="3500">โซน B - 3,500 บาท</option>
+                            <option value="C" data-price="2500">โซน C - 2,500 บาท</option>
+                        </select>
+                        <select class="qty-select" id="qty-1">
+                            <option value="1">1 ใบ</option>
+                            <option value="2">2 ใบ</option>
+                            <option value="3">3 ใบ</option>
+                            <option value="4">4 ใบ</option>
+                            <option value="5">5 ใบ</option>
+                            <option value="6">6 ใบ</option>
+                        </select>
+                    </div>
+                    <button class="book-btn" onclick="openConfirmModal('NEON WORLD TOUR IN BANGKOK', 'zone-1', 'qty-1')">จองบัตร</button>
                 </div>
             </div>
 
@@ -338,49 +442,97 @@
                 <div class="card-banner banner-2">STARLIGHT FEST</div>
                 <div class="card-body">
                     <div class="concert-name">STARLIGHT MUSIC FEST</div>
-                    <select class="zone-select" id="zone-2">
-                        <option value="VIP - 6,000 บาท">โซน VIP - 6,000 บาท</option>
-                        <option value="A - 4,800 บาท">โซน A - 4,800 บาท</option>
-                        <option value="B - 3,600 บาท">โซน B - 3,600 บาท</option>
-                        <option value="C - 2,400 บาท">โซน C - 2,400 บาท</option>
-                    </select>
-                    <button class="book-btn" onclick="bookTicket('STARLIGHT MUSIC FEST', 'zone-2')">จองบัตร</button>
+                    <div class="selection-row">
+                        <select class="zone-select" id="zone-2">
+                            <option value="VIP" data-price="6000">โซน VIP - 6,000 บาท</option>
+                            <option value="A" data-price="4800">โซน A - 4,800 บาท</option>
+                            <option value="B" data-price="3600">โซน B - 3,600 บาท</option>
+                            <option value="C" data-price="2400">โซน C - 2,400 บาท</option>
+                        </select>
+                        <select class="qty-select" id="qty-2">
+                            <option value="1">1 ใบ</option>
+                            <option value="2">2 ใบ</option>
+                            <option value="3">3 ใบ</option>
+                            <option value="4">4 ใบ</option>
+                            <option value="5">5 ใบ</option>
+                            <option value="6">6 ใบ</option>
+                        </select>
+                    </div>
+                    <button class="book-btn" onclick="openConfirmModal('STARLIGHT MUSIC FEST', 'zone-2', 'qty-2')">จองบัตร</button>
                 </div>
             </div>
 
-            <!-- คอนเสิร์ตที่ 3 (เพิ่มใหม่) -->
+            <!-- คอนเสิร์ตที่ 3 -->
             <div class="concert-card">
                 <div class="card-banner banner-3">CYBERPUNK LIVE</div>
                 <div class="card-body">
                     <div class="concert-name">CYBERPUNK LIVE CONCERT 2026</div>
-                    <select class="zone-select" id="zone-3">
-                        <option value="VIP - 5,000 บาท">โซน VIP - 5,000 บาท</option>
-                        <option value="A - 4,000 บาท">โซน A - 4,000 บาท</option>
-                        <option value="B - 3,000 บาท">โซน B - 3,000 บาท</option>
-                        <option value="C - 2,000 บาท">โซน C - 2,000 บาท</option>
-                    </select>
-                    <button class="book-btn" onclick="bookTicket('CYBERPUNK LIVE CONCERT 2026', 'zone-3')">จองบัตร</button>
+                    <div class="selection-row">
+                        <select class="zone-select" id="zone-3">
+                            <option value="VIP" data-price="5000">โซน VIP - 5,000 บาท</option>
+                            <option value="A" data-price="4000">โซน A - 4,000 บาท</option>
+                            <option value="B" data-price="3000">โซน B - 3,000 บาท</option>
+                            <option value="C" data-price="2000">โซน C - 2,000 บาท</option>
+                        </select>
+                        <select class="qty-select" id="qty-3">
+                            <option value="1">1 ใบ</option>
+                            <option value="2">2 ใบ</option>
+                            <option value="3">3 ใบ</option>
+                            <option value="4">4 ใบ</option>
+                            <option value="5">5 ใบ</option>
+                            <option value="6">6 ใบ</option>
+                        </select>
+                    </div>
+                    <button class="book-btn" onclick="openConfirmModal('CYBERPUNK LIVE CONCERT 2026', 'zone-3', 'qty-3')">จองบัตร</button>
                 </div>
             </div>
 
-            <!-- คอนเสิร์ตที่ 4 (เพิ่มใหม่) -->
+            <!-- คอนเสิร์ตที่ 4 -->
             <div class="concert-card">
                 <div class="card-banner banner-4">MIDNIGHT ECHOES</div>
                 <div class="card-body">
                     <div class="concert-name">MIDNIGHT ECHOES FEST</div>
-                    <select class="zone-select" id="zone-4">
-                        <option value="VIP - 4,900 บาท">โซน VIP - 4,900 บาท</option>
-                        <option value="A - 3,900 บาท">โซน A - 3,900 บาท</option>
-                        <option value="B - 2,900 บาท">โซน B - 2,900 บาท</option>
-                        <option value="C - 1,900 บาท">โซน C - 1,900 บาท</option>
-                    </select>
-                    <button class="book-btn" onclick="bookTicket('MIDNIGHT ECHOES FEST', 'zone-4')">จองบัตร</button>
+                    <div class="selection-row">
+                        <select class="zone-select" id="zone-4">
+                            <option value="VIP" data-price="4900">โซน VIP - 4,900 บาท</option>
+                            <option value="A" data-price="3900">โซน A - 3,900 บาท</option>
+                            <option value="B" data-price="2900">โซน B - 2,900 บาท</option>
+                            <option value="C" data-price="1900">โซน C - 1,900 บาท</option>
+                        </select>
+                        <select class="qty-select" id="qty-4">
+                            <option value="1">1 ใบ</option>
+                            <option value="2">2 ใบ</option>
+                            <option value="3">3 ใบ</option>
+                            <option value="4">4 ใบ</option>
+                            <option value="5">5 ใบ</option>
+                            <option value="6">6 ใบ</option>
+                        </select>
+                    </div>
+                    <button class="book-btn" onclick="openConfirmModal('MIDNIGHT ECHOES FEST', 'zone-4', 'qty-4')">จองบัตร</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- หน้าต่างแจ้งเตือนจองบัตรสำเร็จแบบมีสีสัน -->
+    <!-- หน้าต่างที่ 1: ยืนยันการจอง หรือ ยกเลิก -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal-box confirm-box">
+            <div class="modal-icon">🎫</div>
+            <div class="modal-title confirm-title">ยืนยันการจองบัตร</div>
+            <div class="modal-details">
+                <p>คอนเสิร์ต: <span id="confirmConcert">-</span></p>
+                <p>โซนที่เลือก: <span id="confirmZone">-</span></p>
+                <p>จำนวนบัตร: <span id="confirmQty">-</span></p>
+                <p class="total-price-row">ยอดชำระรวม: <span id="confirmTotal">-</span></p>
+            </div>
+            <div class="modal-btn-group">
+                <button class="btn-cancel" onclick="closeConfirmModal()">ยกเลิก</button>
+                <button class="btn-confirm" onclick="confirmBooking()">ยืนยันการจอง</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- หน้าต่างที่ 2: แจ้งเตือนจองบัตรสำเร็จ -->
     <div class="modal-overlay" id="successModal">
         <div class="modal-box">
             <div class="modal-icon">🎉</div>
@@ -388,13 +540,18 @@
             <div class="modal-details">
                 <p>คอนเสิร์ต: <span id="modalConcert">-</span></p>
                 <p>โซนที่เลือก: <span id="modalZone">-</span></p>
+                <p>จำนวน: <span id="modalQty">-</span></p>
+                <p class="total-price-row">ชำระเรียบร้อย: <span id="modalTotal">-</span></p>
             </div>
-            <button class="modal-close-btn" onclick="closeModal()">ตกลง / ปิดหน้าต่าง</button>
+            <button class="modal-close-btn" onclick="closeSuccessModal()">ตกลง / ปิดหน้าต่าง</button>
         </div>
     </div>
 
     <script>
-        // ดึงชื่อผู้ใช้จาก localStorage (ถ้ามีจากหน้า login/register)
+        // เก็บข้อมูลรายการที่กำลังรอยืนยัน
+        let pendingBooking = null;
+
+        // ดึงชื่อผู้ใช้จาก localStorage
         window.onload = function() {
             const savedUser = localStorage.getItem('currentUser') || localStorage.getItem('username');
             if (savedUser) {
@@ -403,27 +560,69 @@
             }
         };
 
-        // ฟังก์ชันกดจองบัตร
-        function bookTicket(concertName, selectId) {
-            const selectedZone = document.getElementById(selectId).value;
+        // ขั้นที่ 1: กดปุ่มจองบัตร -> เปิดหน้าต่างให้ลูกค้าตรวจสอบและยืนยัน/ยกเลิก
+        function openConfirmModal(concertName, zoneSelectId, qtySelectId) {
+            const zoneEl = document.getElementById(zoneSelectId);
+            const selectedOption = zoneEl.options[zoneEl.selectedIndex];
+            const zoneName = selectedOption.value;
+            const unitPrice = parseInt(selectedOption.getAttribute('data-price'));
+            const quantity = parseInt(document.getElementById(qtySelectId).value);
+            const totalPrice = unitPrice * quantity;
 
-            // บันทึกประวัติการจองลง localStorage (เผื่อหน้า profile.html ดึงไปแสดง)
+            // เก็บข้อมูลชั่วคราวไว้รอการยืนยัน
+            pendingBooking = {
+                concert: concertName,
+                zone: zoneName,
+                unitPrice: unitPrice,
+                quantity: quantity,
+                totalPrice: totalPrice
+            };
+
+            // แสดงรายละเอียดในหน้าต่างยืนยัน
+            document.getElementById('confirmConcert').textContent = concertName;
+            document.getElementById('confirmZone').textContent = 'โซน ' + zoneName + ' (' + unitPrice.toLocaleString() + ' บ.)';
+            document.getElementById('confirmQty').textContent = quantity + ' ใบ';
+            document.getElementById('confirmTotal').textContent = totalPrice.toLocaleString() + ' บาท';
+
+            document.getElementById('confirmModal').classList.add('active');
+        }
+
+        // หากลูกค้ากด "ยกเลิก"
+        function closeConfirmModal() {
+            pendingBooking = null;
+            document.getElementById('confirmModal').classList.remove('active');
+        }
+
+        // ขั้นที่ 2: หากลูกค้ากด "ยืนยันการจอง" -> บันทึกข้อมูลและแสดงหน้าต่างสำเร็จ
+        function confirmBooking() {
+            if (!pendingBooking) return;
+
+            // ปิดหน้าต่างยืนยัน
+            document.getElementById('confirmModal').classList.remove('active');
+
+            // บันทึกลง localStorage
             const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
             bookings.push({
-                concert: concertName,
-                zone: selectedZone,
+                concert: pendingBooking.concert,
+                zone: pendingBooking.zone + ' (' + pendingBooking.quantity + ' ใบ - ' + pendingBooking.totalPrice.toLocaleString() + ' บาท)',
+                quantity: pendingBooking.quantity,
+                totalPrice: pendingBooking.totalPrice,
                 date: new Date().toLocaleString('th-TH')
             });
             localStorage.setItem('bookings', JSON.stringify(bookings));
 
-            // แสดงข้อมูลใน Modal สีสันสดใส
-            document.getElementById('modalConcert').textContent = concertName;
-            document.getElementById('modalZone').textContent = 'โซน ' + selectedZone;
+            // แสดงข้อมูลในหน้าต่างจองสำเร็จ
+            document.getElementById('modalConcert').textContent = pendingBooking.concert;
+            document.getElementById('modalZone').textContent = 'โซน ' + pendingBooking.zone;
+            document.getElementById('modalQty').textContent = pendingBooking.quantity + ' ใบ';
+            document.getElementById('modalTotal').textContent = pendingBooking.totalPrice.toLocaleString() + ' บาท';
+
             document.getElementById('successModal').classList.add('active');
+            pendingBooking = null;
         }
 
-        // ฟังก์ชันปิดหน้าต่าง Modal
-        function closeModal() {
+        // ปิดหน้าต่างจองสำเร็จ
+        function closeSuccessModal() {
             document.getElementById('successModal').classList.remove('active');
         }
     </script>
