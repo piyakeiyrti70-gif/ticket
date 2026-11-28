@@ -22,8 +22,18 @@
 
         .container {
             max-width: 900px;
-            margin: 35px auto;
+            margin: 30px auto;
             padding: 0 20px;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
         }
 
         .back-link {
@@ -33,13 +43,31 @@
             color: #a5b4fc;
             text-decoration: none;
             font-size: 0.95rem;
-            margin-bottom: 22px;
             transition: 0.2s;
         }
 
         .back-link:hover {
-            color: #ff2a85;
+            color: #00e5ff;
             transform: translateX(-3px);
+        }
+
+        .logout-btn {
+            background: rgba(255, 42, 133, 0.14);
+            color: #ff6b9d;
+            border: 1px solid rgba(255, 42, 133, 0.4);
+            padding: 8px 18px;
+            border-radius: 12px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .logout-btn:hover {
+            background: linear-gradient(90deg, #ff2a85, #e11d48);
+            color: #ffffff;
+            border-color: transparent;
+            box-shadow: 0 6px 20px rgba(255, 42, 133, 0.35);
         }
 
         /* Profile Card */
@@ -50,7 +78,7 @@
             padding: 36px 24px;
             text-align: center;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45);
-            margin-bottom: 35px;
+            margin-bottom: 28px;
         }
 
         .profile-avatar {
@@ -68,7 +96,7 @@
         }
 
         .profile-name {
-            font-size: 1.7rem;
+            font-size: 1.75rem;
             font-weight: 700;
             margin-bottom: 6px;
         }
@@ -76,15 +104,15 @@
         .profile-meta {
             color: #9ca3af;
             font-size: 0.92rem;
-            margin-bottom: 22px;
+            margin-bottom: 24px;
         }
 
         .balance-box {
             display: inline-block;
-            background: rgba(13, 11, 30, 0.9);
+            background: rgba(13, 11, 30, 0.92);
             border: 1px solid rgba(0, 230, 118, 0.35);
             border-radius: 18px;
-            padding: 16px 34px;
+            padding: 16px 38px;
         }
 
         .balance-label {
@@ -94,8 +122,134 @@
         }
 
         .balance-amount {
-            font-size: 1.9rem;
+            font-size: 2rem;
             font-weight: 700;
+            color: #00e676;
+        }
+
+        /* Top-up Box */
+        .panel-card {
+            background: #181430;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 32px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .panel-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quick-amounts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .quick-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: #e5e7eb;
+            padding: 7px 14px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .quick-btn:hover {
+            border-color: #00e5ff;
+            color: #00e5ff;
+            background: rgba(0, 229, 255, 0.08);
+        }
+
+        .topup-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+
+        .topup-input {
+            flex: 1;
+            min-width: 180px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: #100d24;
+            color: #ffffff;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .topup-input:focus {
+            border-color: #00e676;
+        }
+
+        .topup-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #00b09b, #00e676);
+            color: #0b0918;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .topup-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 230, 118, 0.35);
+        }
+
+        .slip-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px dashed rgba(255, 255, 255, 0.16);
+            border-radius: 14px;
+            padding: 12px 16px;
+        }
+
+        .slip-label {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+
+        .slip-preview {
+            display: none;
+            margin-top: 12px;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .slip-preview.show {
+            display: flex;
+        }
+
+        .slip-preview img {
+            width: 64px;
+            height: 64px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 229, 255, 0.4);
+        }
+
+        .status-msg {
+            margin-top: 12px;
+            font-size: 0.92rem;
+            min-height: 20px;
             color: #00e676;
         }
 
@@ -106,7 +260,7 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 12px;
-            margin-bottom: 22px;
+            margin-bottom: 20px;
         }
 
         .section-title {
@@ -148,7 +302,6 @@
             border-color: rgba(0, 229, 255, 0.45);
         }
 
-        /* แถบสีด้านซ้ายของตั๋ว */
         .ticket-strip {
             width: 12px;
             background: linear-gradient(180deg, #ff2a85, #00e5ff);
@@ -167,7 +320,6 @@
             background: linear-gradient(180deg, #00e676, #00897b);
         }
 
-        /* ส่วนรายละเอียดหลักของตั๋ว */
         .ticket-main {
             flex: 1;
             padding: 20px 24px;
@@ -175,7 +327,6 @@
             position: relative;
         }
 
-        /* รอยปรุครึ่งวงกลมด้านบน-ล่าง */
         .ticket-main::before,
         .ticket-main::after {
             content: "";
@@ -255,7 +406,6 @@
             color: #9ca3af;
         }
 
-        /* ส่วนสรุปยอดด้านขวาของตั๋ว */
         .ticket-side {
             min-width: 165px;
             padding: 20px;
@@ -320,7 +470,11 @@
 <body>
 
     <div class="container">
-        <a href="app.html" class="back-link">← กลับไปหน้าจองบัตร</a>
+        <!-- แถบนำทางด้านบน + ปุ่มออกจากระบบ -->
+        <div class="top-bar">
+            <a href="app.html" class="back-link">← กลับไปหน้าจองบัตร</a>
+            <button class="logout-btn" onclick="logout()">ออกจากระบบ</button>
+        </div>
 
         <!-- การ์ดข้อมูลผู้ใช้ -->
         <div class="profile-card">
@@ -334,6 +488,35 @@
             </div>
         </div>
 
+        <!-- ระบบเติมเงิน -->
+        <div class="panel-card">
+            <div class="panel-title">💳 ระบบเติมเงิน (ผ่าน QR Code / สลิป)</div>
+
+            <div class="quick-amounts">
+                <button type="button" class="quick-btn" onclick="setAmount(500)">+500 ฿</button>
+                <button type="button" class="quick-btn" onclick="setAmount(1000)">+1,000 ฿</button>
+                <button type="button" class="quick-btn" onclick="setAmount(2500)">+2,500 ฿</button>
+                <button type="button" class="quick-btn" onclick="setAmount(5000)">+5,000 ฿</button>
+            </div>
+
+            <div class="topup-row">
+                <input type="number" id="topupAmount" class="topup-input" placeholder="ระบุจำนวนเงินที่ต้องการเติม (บาท)" min="1">
+                <button type="button" class="topup-btn" onclick="topUpBalance()">ยืนยันเติมเงิน</button>
+            </div>
+
+            <div class="slip-row">
+                <span class="slip-label">แนบรูปสลิปการโอนเงิน (ถ้ามี):</span>
+                <input type="file" id="slipInput" accept="image/*" onchange="previewSlip(event)">
+            </div>
+
+            <div class="slip-preview" id="slipPreview">
+                <img id="slipImg" src="" alt="ตัวอย่างสลิป">
+                <span id="slipName" style="font-size: 0.88rem; color: #00e5ff;"></span>
+            </div>
+
+            <div class="status-msg" id="topupMsg"></div>
+        </div>
+
         <!-- หัวข้อประวัติการจอง -->
         <div class="section-header">
             <h2 class="section-title">🎟️ ประวัติการจองบัตร (E-Ticket)</h2>
@@ -345,6 +528,68 @@
     </div>
 
     <script>
+        function getCurrentBalance() {
+            const raw = localStorage.getItem('balance');
+            if (raw === null || isNaN(Number(raw))) {
+                localStorage.setItem('balance', '10501');
+                return 10501;
+            }
+            return Number(raw);
+        }
+
+        function updateBalanceDisplay() {
+            document.getElementById('balanceAmount').textContent = getCurrentBalance().toLocaleString() + ' ฿';
+        }
+
+        function setAmount(amount) {
+            document.getElementById('topupAmount').value = amount;
+        }
+
+        function previewSlip(event) {
+            const file = event.target.files[0];
+            const previewBox = document.getElementById('slipPreview');
+            if (!file) {
+                previewBox.classList.remove('show');
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('slipImg').src = e.target.result;
+                document.getElementById('slipName').textContent = 'ไฟล์สลิป: ' + file.name;
+                previewBox.classList.add('show');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function topUpBalance() {
+            const input = document.getElementById('topupAmount');
+            const msgEl = document.getElementById('topupMsg');
+            const amount = Number(input.value);
+
+            if (!amount || amount <= 0) {
+                msgEl.style.color = '#ff6b9d';
+                msgEl.textContent = 'กรุณาระบุจำนวนเงินให้ถูกต้องครับ';
+                return;
+            }
+
+            const newBalance = getCurrentBalance() + amount;
+            localStorage.setItem('balance', String(newBalance));
+            updateBalanceDisplay();
+
+            input.value = '';
+            document.getElementById('slipInput').value = '';
+            document.getElementById('slipPreview').classList.remove('show');
+
+            msgEl.style.color = '#00e676';
+            msgEl.textContent = 'เติมเงินสำเร็จ +' + amount.toLocaleString() + ' บาท เรียบร้อยแล้วครับ!';
+        }
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('username');
+            window.location.href = 'index.html';
+        }
+
         function getThemeClass(concertName) {
             const upper = (concertName || '').toUpperCase();
             if (upper.includes('STARLIGHT')) return 'theme-starlight';
@@ -358,10 +603,7 @@
             document.getElementById('profileName').textContent = savedUser;
             document.getElementById('profileAvatar').textContent = savedUser.charAt(0).toUpperCase();
 
-            const savedBalance = localStorage.getItem('balance');
-            if (savedBalance !== null && !isNaN(Number(savedBalance))) {
-                document.getElementById('balanceAmount').textContent = Number(savedBalance).toLocaleString() + ' ฿';
-            }
+            updateBalanceDisplay();
 
             const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
             const listEl = document.getElementById('ticketList');
@@ -378,7 +620,6 @@
                 return;
             }
 
-            // แสดงรายการล่าสุดขึ้นก่อน โดยคงเลขลำดับตั๋วเดิมไว้
             const indexedBookings = bookings.map((item, idx) => ({ ...item, index: idx }));
             indexedBookings.reverse();
 
