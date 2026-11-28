@@ -127,30 +127,86 @@
             color: #00e676;
         }
 
-        /* History Section (ย้ายขึ้นมาไว้ด้านบน) */
+        /* History Section Header + Toggle Button */
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
+            background: rgba(24, 20, 48, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            padding: 14px 20px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
         .section-title {
-            font-size: 1.35rem;
+            font-size: 1.3rem;
             font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .ticket-count-badge {
             background: linear-gradient(90deg, #ff2a85, #9c27b0);
-            padding: 4px 14px;
+            padding: 4px 13px;
             border-radius: 50px;
             font-size: 0.85rem;
             font-weight: 600;
+        }
+
+        .toggle-history-btn {
+            background: rgba(0, 229, 255, 0.12);
+            border: 1px solid rgba(0, 229, 255, 0.35);
+            color: #00e5ff;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.25s;
+        }
+
+        .toggle-history-btn:hover {
+            background: rgba(0, 229, 255, 0.22);
+            transform: translateY(-1px);
+        }
+
+        .chevron-icon {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .chevron-icon.rotated {
+            transform: rotate(180deg);
+        }
+
+        /* Collapsible Wrapper */
+        .collapsible-wrapper {
+            overflow: hidden;
+            max-height: 3000px;
+            opacity: 1;
+            transition: max-height 0.45s ease, opacity 0.3s ease, margin-bottom 0.35s ease;
+            margin-bottom: 32px;
+        }
+
+        .collapsible-wrapper.collapsed {
+            max-height: 0;
+            opacity: 0;
+            margin-bottom: 18px;
+            pointer-events: none;
         }
 
         /* E-Ticket Cards */
@@ -158,7 +214,6 @@
             display: flex;
             flex-direction: column;
             gap: 18px;
-            margin-bottom: 32px;
         }
 
         .e-ticket {
@@ -313,7 +368,7 @@
             color: #9ca3af;
         }
 
-        /* Top-up Box (ย้ายมาไว้ด้านล่าง) */
+        /* Top-up Box */
         .panel-card {
             background: #181430;
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -488,16 +543,24 @@
             </div>
         </div>
 
-        <!-- หัวข้อประวัติการจอง (ย้ายมาไว้ด้านบน) -->
+        <!-- หัวข้อประวัติการจอง + ปุ่มเปิด/ย่อรายการ -->
         <div class="section-header">
-            <h2 class="section-title">🎟️ ประวัติการจองบัตร (E-Ticket)</h2>
-            <span class="ticket-count-badge" id="ticketCountBadge">0 รายการ</span>
+            <div class="header-left">
+                <h2 class="section-title">🎟️ ประวัติการจองบัตร (E-Ticket)</h2>
+                <span class="ticket-count-badge" id="ticketCountBadge">0 รายการ</span>
+            </div>
+            <button type="button" class="toggle-history-btn" id="toggleHistoryBtn" onclick="toggleHistory()">
+                <span id="toggleHistoryText">ย่อรายการ</span>
+                <span class="chevron-icon" id="toggleChevron">▲</span>
+            </button>
         </div>
 
-        <!-- รายการตั๋ว -->
-        <div class="ticket-list" id="ticketList"></div>
+        <!-- กล่องรายการตั๋วแบบย่อ/เปิดได้ -->
+        <div class="collapsible-wrapper" id="historyWrapper">
+            <div class="ticket-list" id="ticketList"></div>
+        </div>
 
-        <!-- ระบบเติมเงิน (ย้ายมาไว้ด้านล่าง) -->
+        <!-- ระบบเติมเงิน -->
         <div class="panel-card">
             <div class="panel-title">💳 ระบบเติมเงิน (ผ่าน QR Code / สลิป)</div>
 
@@ -528,6 +591,25 @@
     </div>
 
     <script>
+        let isHistoryOpen = true;
+
+        function toggleHistory() {
+            isHistoryOpen = !isHistoryOpen;
+            const wrapper = document.getElementById('historyWrapper');
+            const textEl = document.getElementById('toggleHistoryText');
+            const chevronEl = document.getElementById('toggleChevron');
+
+            if (isHistoryOpen) {
+                wrapper.classList.remove('collapsed');
+                textEl.textContent = 'ย่อรายการ';
+                chevronEl.classList.remove('rotated');
+            } else {
+                wrapper.classList.add('collapsed');
+                textEl.textContent = 'ดูรายการ';
+                chevronEl.classList.add('rotated');
+            }
+        }
+
         function getCurrentBalance() {
             const raw = localStorage.getItem('balance');
             if (raw === null || isNaN(Number(raw))) {
