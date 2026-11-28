@@ -6,14 +6,6 @@
     <title>จองบัตรคอนเสิร์ต - LIVE TICKET</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #ff2a85;
-            --secondary: #7928ca;
-            --accent: #00d2ff;
-            --bg-dark: #0f0c29;
-            --text-light: #ffffff;
-        }
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -22,214 +14,419 @@
         }
 
         body {
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            color: var(--text-light);
+            background: radial-gradient(circle at top, #1b1738 0%, #0d0b1e 100%);
+            color: #ffffff;
             min-height: 100vh;
+            padding-bottom: 50px;
         }
 
+        /* Navbar */
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 5%;
-            background: rgba(15, 12, 41, 0.9);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 18px 8%;
+            background: rgba(13, 11, 30, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 700;
-            background: linear-gradient(to right, var(--accent), var(--primary));
+            background: linear-gradient(90deg, #ff2a85, #ff7a00);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .profile-link {
+        .profile-btn {
             display: flex;
             align-items: center;
             gap: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 6px 15px 6px 6px;
-            border-radius: 30px;
-            cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: 0.3s;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 6px 16px 6px 8px;
+            border-radius: 50px;
+            color: #fff;
             text-decoration: none;
-            color: white;
+            font-size: 0.95rem;
+            transition: 0.3s;
         }
 
-        .profile-link:hover {
-            background: rgba(255, 255, 255, 0.2);
+        .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #ff2a85;
         }
 
-        .avatar-small {
-            width: 35px;
-            height: 35px;
+        .avatar {
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
-            background: linear-gradient(45deg, var(--accent), var(--primary));
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
             display: flex;
-            justify-content: center;
             align-items: center;
-            font-weight: bold;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.85rem;
         }
 
+        /* Main Container */
         .container {
-            max-width: 1000px;
-            margin: 30px auto;
+            max-width: 1100px;
+            margin: 40px auto;
             padding: 0 20px;
         }
 
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Concert Grid */
         .concert-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 28px;
         }
 
         .concert-card {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 16px;
+            background: #1a1832;
+            border-radius: 20px;
             overflow: hidden;
-            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .concert-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(255, 42, 133, 0.2);
+            border-color: rgba(255, 42, 133, 0.4);
         }
 
-        .concert-banner {
-            height: 150px;
+        .card-banner {
+            height: 170px;
             display: flex;
-            justify-content: center;
             align-items: center;
-            font-size: 1.4rem;
-            font-weight: bold;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
             text-align: center;
-            padding: 15px;
+            padding: 20px;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
         }
 
-        .concert-body {
-            padding: 20px;
+        /* สีพื้นหลังแบนเนอร์แต่ละคอนเสิร์ต */
+        .banner-1 { background: linear-gradient(135deg, #d81b60, #6a1b9a); }
+        .banner-2 { background: linear-gradient(135deg, #00838f, #1565c0); }
+        .banner-3 { background: linear-gradient(135deg, #ff6f00, #d84315); }
+        .banner-4 { background: linear-gradient(135deg, #00b09b, #2e7d32); }
+
+        .card-body {
+            padding: 24px;
+        }
+
+        .concert-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #f3f4f6;
         }
 
         .zone-select {
             width: 100%;
-            padding: 10px;
-            margin: 12px 0;
-            border-radius: 8px;
-            background: #1a1638;
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 13px 16px;
+            border-radius: 12px;
+            background: #110f24;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            font-size: 0.95rem;
+            margin-bottom: 18px;
+            outline: none;
+            cursor: pointer;
+            transition: 0.2s;
         }
 
-        .btn-main {
+        .zone-select:focus {
+            border-color: #ff2a85;
+        }
+
+        .book-btn {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #ff2a85, #9c27b0);
+            color: #fff;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.3s, transform 0.1s;
+        }
+
+        .book-btn:hover {
+            opacity: 0.9;
+        }
+
+        .book-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Custom Colorful Modal (หน้าต่างแจ้งเตือนแบบมีสีสัน) */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(8, 7, 20, 0.8);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .modal-box {
+            background: linear-gradient(145deg, #241f47, #161330);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+            border-radius: 24px;
+            padding: 32px 28px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(255, 42, 133, 0.35);
+            animation: popUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-box::before {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            border-radius: 26px;
+            background: linear-gradient(135deg, #ff2a85, #00e5ff, #ffea00);
+            z-index: -1;
+        }
+
+        .modal-icon {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            display: inline-block;
+            animation: bounce 1s infinite alternate;
+        }
+
+        .modal-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #00e5ff, #ff2a85);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+        }
+
+        .modal-details {
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 24px;
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-details p {
+            margin: 6px 0;
+            font-size: 1rem;
+            color: #e5e7eb;
+        }
+
+        .modal-details span {
+            color: #00e5ff;
+            font-weight: 600;
+        }
+
+        .modal-close-btn {
             width: 100%;
             padding: 12px;
             border: none;
-            border-radius: 10px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            color: white;
-            font-size: 1rem;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            color: #fff;
+            font-size: 1.05rem;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.3s;
+            box-shadow: 0 6px 20px rgba(0, 114, 255, 0.4);
+            transition: 0.2s;
         }
 
-        .btn-main:hover {
-            filter: brightness(1.2);
+        .modal-close-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 198, 255, 0.6);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes popUp {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-6px); }
+        }
+
+        @media (max-width: 500px) {
+            .concert-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- Navbar -->
     <nav class="navbar">
-        <div class="logo">⚡ LIVE TICKET</div>
-        <!-- ปุ่มลิงก์ไปหน้าแยก profile.html -->
-        <a href="profile.html" class="profile-link">
-            <div class="avatar-small" id="navAvatar">U</div>
-            <span id="navUsername">Username</span>
+        <a href="app.html" class="logo">⚡ LIVE TICKET</a>
+        <a href="profile.html" class="profile-btn">
+            <div class="avatar" id="userAvatar">U</div>
+            <span id="userName">paman</span>
         </a>
     </nav>
 
+    <!-- Main Content -->
     <div class="container">
-        <h2>🔥 คอนเสิร์ตที่เปิดให้กดบัตรขณะนี้</h2>
+        <h2 class="section-title">🔥 คอนเสิร์ตที่เปิดให้กดบัตรขณะนี้</h2>
+
         <div class="concert-grid">
+            <!-- คอนเสิร์ตที่ 1 -->
             <div class="concert-card">
-                <div class="concert-banner" style="background: linear-gradient(45deg, #ff007f, #7928ca);">NEON WORLD TOUR</div>
-                <div class="concert-body">
-                    <h3>NEON WORLD TOUR IN BANGKOK</h3>
-                    <select id="zone1" class="zone-select">
-                        <option value="VIP - 5,500|5500">โซน VIP - 5,500 บาท</option>
-                        <option value="Zone A - 3,500|3500">โซน A - 3,500 บาท</option>
+                <div class="card-banner banner-1">NEON WORLD TOUR</div>
+                <div class="card-body">
+                    <div class="concert-name">NEON WORLD TOUR IN BANGKOK</div>
+                    <select class="zone-select" id="zone-1">
+                        <option value="VIP - 5,500 บาท">โซน VIP - 5,500 บาท</option>
+                        <option value="A - 4,500 บาท">โซน A - 4,500 บาท</option>
+                        <option value="B - 3,500 บาท">โซน B - 3,500 บาท</option>
+                        <option value="C - 2,500 บาท">โซน C - 2,500 บาท</option>
                     </select>
-                    <button class="btn-main" onclick="bookTicket('NEON WORLD TOUR', 'zone1')">จองบัตร</button>
+                    <button class="book-btn" onclick="bookTicket('NEON WORLD TOUR IN BANGKOK', 'zone-1')">จองบัตร</button>
                 </div>
             </div>
+
+            <!-- คอนเสิร์ตที่ 2 -->
             <div class="concert-card">
-                <div class="concert-banner" style="background: linear-gradient(45deg, #00d2ff, #3a7bd5);">STARLIGHT FEST</div>
-                <div class="concert-body">
-                    <h3>STARLIGHT MUSIC FEST</h3>
-                    <select id="zone2" class="zone-select">
-                        <option value="VVIP - 6,000|6000">โซน VVIP - 6,000 บาท</option>
-                        <option value="Regular - 2,500|2500">โซน Regular - 2,500 บาท</option>
+                <div class="card-banner banner-2">STARLIGHT FEST</div>
+                <div class="card-body">
+                    <div class="concert-name">STARLIGHT MUSIC FEST</div>
+                    <select class="zone-select" id="zone-2">
+                        <option value="VIP - 6,000 บาท">โซน VIP - 6,000 บาท</option>
+                        <option value="A - 4,800 บาท">โซน A - 4,800 บาท</option>
+                        <option value="B - 3,600 บาท">โซน B - 3,600 บาท</option>
+                        <option value="C - 2,400 บาท">โซน C - 2,400 บาท</option>
                     </select>
-                    <button class="btn-main" onclick="bookTicket('STARLIGHT MUSIC FEST', 'zone2')">จองบัตร</button>
+                    <button class="book-btn" onclick="bookTicket('STARLIGHT MUSIC FEST', 'zone-2')">จองบัตร</button>
+                </div>
+            </div>
+
+            <!-- คอนเสิร์ตที่ 3 (เพิ่มใหม่) -->
+            <div class="concert-card">
+                <div class="card-banner banner-3">CYBERPUNK LIVE</div>
+                <div class="card-body">
+                    <div class="concert-name">CYBERPUNK LIVE CONCERT 2026</div>
+                    <select class="zone-select" id="zone-3">
+                        <option value="VIP - 5,000 บาท">โซน VIP - 5,000 บาท</option>
+                        <option value="A - 4,000 บาท">โซน A - 4,000 บาท</option>
+                        <option value="B - 3,000 บาท">โซน B - 3,000 บาท</option>
+                        <option value="C - 2,000 บาท">โซน C - 2,000 บาท</option>
+                    </select>
+                    <button class="book-btn" onclick="bookTicket('CYBERPUNK LIVE CONCERT 2026', 'zone-3')">จองบัตร</button>
+                </div>
+            </div>
+
+            <!-- คอนเสิร์ตที่ 4 (เพิ่มใหม่) -->
+            <div class="concert-card">
+                <div class="card-banner banner-4">MIDNIGHT ECHOES</div>
+                <div class="card-body">
+                    <div class="concert-name">MIDNIGHT ECHOES FEST</div>
+                    <select class="zone-select" id="zone-4">
+                        <option value="VIP - 4,900 บาท">โซน VIP - 4,900 บาท</option>
+                        <option value="A - 3,900 บาท">โซน A - 3,900 บาท</option>
+                        <option value="B - 2,900 บาท">โซน B - 2,900 บาท</option>
+                        <option value="C - 1,900 บาท">โซน C - 1,900 บาท</option>
+                    </select>
+                    <button class="book-btn" onclick="bookTicket('MIDNIGHT ECHOES FEST', 'zone-4')">จองบัตร</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- หน้าต่างแจ้งเตือนจองบัตรสำเร็จแบบมีสีสัน -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-box">
+            <div class="modal-icon">🎉</div>
+            <div class="modal-title">จองบัตรสำเร็จ!</div>
+            <div class="modal-details">
+                <p>คอนเสิร์ต: <span id="modalConcert">-</span></p>
+                <p>โซนที่เลือก: <span id="modalZone">-</span></p>
+            </div>
+            <button class="modal-close-btn" onclick="closeModal()">ตกลง / ปิดหน้าต่าง</button>
+        </div>
+    </div>
+
     <script>
-        function checkUser() {
-            const currentUser = localStorage.getItem('current_user');
-            if (!currentUser) {
-                window.location.href = 'index.html';
-                return;
+        // ดึงชื่อผู้ใช้จาก localStorage (ถ้ามีจากหน้า login/register)
+        window.onload = function() {
+            const savedUser = localStorage.getItem('currentUser') || localStorage.getItem('username');
+            if (savedUser) {
+                document.getElementById('userName').textContent = savedUser;
+                document.getElementById('userAvatar').textContent = savedUser.charAt(0).toUpperCase();
             }
-            const users = JSON.parse(localStorage.getItem('concert_users'));
-            if (!users || !users[currentUser]) {
-                window.location.href = 'index.html';
-                return;
-            }
+        };
 
-            const firstLetter = currentUser.charAt(0).toUpperCase();
-            document.getElementById('navAvatar').innerText = firstLetter;
-            document.getElementById('navUsername').innerText = currentUser;
-        }
-
+        // ฟังก์ชันกดจองบัตร
         function bookTicket(concertName, selectId) {
-            const select = document.getElementById(selectId);
-            const [zoneLabel, priceStr] = select.value.split('|');
-            const price = parseInt(priceStr);
+            const selectedZone = document.getElementById(selectId).value;
 
-            const currentUser = localStorage.getItem('current_user');
-            let users = JSON.parse(localStorage.getItem('concert_users'));
-            let userData = users[currentUser];
-
-            if (userData.balance < price) {
-                alert(`ยอดเงินไม่เพียงพอ! (ต้องการ ${price.toLocaleString()} บาท)\nกรุณาไปที่หน้าโปรไฟล์เพื่อเติมเงิน`);
-                return;
-            }
-
-            userData.balance -= price;
-            const now = new Date().toLocaleString('th-TH');
-            if (!userData.history) userData.history = [];
-            userData.history.unshift({
+            // บันทึกประวัติการจองลง localStorage (เผื่อหน้า profile.html ดึงไปแสดง)
+            const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+            bookings.push({
                 concert: concertName,
-                zone: zoneLabel,
-                date: now
+                zone: selectedZone,
+                date: new Date().toLocaleString('th-TH')
             });
+            localStorage.setItem('bookings', JSON.stringify(bookings));
 
-            localStorage.setItem('concert_users', JSON.stringify(users));
-            alert(`🎉 จองบัตรสำเร็จ!\nคอนเสิร์ต: ${concertName}\nโซน: ${zoneLabel}`);
+            // แสดงข้อมูลใน Modal สีสันสดใส
+            document.getElementById('modalConcert').textContent = concertName;
+            document.getElementById('modalZone').textContent = 'โซน ' + selectedZone;
+            document.getElementById('successModal').classList.add('active');
         }
 
-        window.onload = checkUser;
+        // ฟังก์ชันปิดหน้าต่าง Modal
+        function closeModal() {
+            document.getElementById('successModal').classList.remove('active');
+        }
     </script>
+
 </body>
 </html>
